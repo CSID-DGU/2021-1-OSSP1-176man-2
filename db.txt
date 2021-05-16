@@ -2,7 +2,7 @@ Mysql 테이블 생성
 
 -- 테이블 생성
 CREATE TABLE WORDS (
-  Wid INT NOT NULL,
+  Wid INT NOT NULL AUTO_INCREMENT,
   Word VARCHAR(10) NOT NULL,
   Class VARCHAR(5) NOT NULL,
   Conjugation BOOL,

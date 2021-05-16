@@ -1,8 +1,10 @@
 import pandas as pd
 from konlpy.tag import Komoran
 import hgtk
+import config
+import pymysql
 
-FILE_PATH = "C:\\Users\woosu\Desktop\공소\말뭉치"  # 말뭉치 excel 파일이 위치한 경로
+FILE_PATH = config.FILE_PATH  # 말뭉치 excel 파일이 위치한 경로
 
 komoran = Komoran()
 
@@ -135,19 +137,106 @@ def getIrregular(original_text):
             indexList.append(index)
 
     for i in indexList:
-        irregular_list.append(stem[i])
+        if not stem[i] == ("NULL", "NULL"):
+            irregular_list.append(stem[i])
 
     return irregular_list
 
 
-''' 
-example 
 '''
+- MySQL DB 연결
+- DB와 상호작용하기 위한 cursor 객체 생성
+return : DB 접근을 위한 cursor 객체와 conn
+'''
+
+
+def connectDB():
+    conn = pymysql.connect(
+        user='root',
+        passwd=config.DB_PASSWORD,
+        host='127.0.0.1',
+        db=config.DB_DATABASE,
+        charset='utf8'
+    )
+    cursor = conn.cursor()
+
+    return cursor, conn
+
+
+'''
+- MySQL DB 삽입, 변경 함수
+- 불규칙 용언에 해당하는 단어의 어간을 처리하기 위한 DML
+@param cursor, conn : DB 연결 시 반환받은 cursor 객체와 conn
+@param word_info : 처리를 통해 분류한 불규칙 용언에 대한 정보 (type = tuple)
+                    (용언의 어간, 품사)로 이루어짐
+'''
+
+
+def dbInsert(cursor, conn, word_info):
+    sql = "INSERT INTO WORDS(Word, Class, Conjugation) VALUES (%s, %s, 1);"
+    cursor.execute(sql, word_info)
+    conn.commit()
+
+
+def dbUpdate(cursor, conn, word_info):
+    sql = "UPDATE WORDS SET Conjugation = 1 WHERE Word = %s"
+    cursor.execute(sql, word_info[0])
+    conn.commit()
+
+
+'''
+- MySQL DB 조회 함수
+- 주어진 용언이 이미 DB에 저장되어 있는 용언인지 판별
+@param cursor : DB 연결 시 반환받은 cursor 객체
+@param word_info : DB에 존재하는 지 판별할 용언에 대한 정보 (type = tuple)
+                    (용언의 어간, 품사)로 이루어짐
+return : DB 내에 해당 용언의 유무 (있을 시 TRUE, 없을 시 FALSE)
+'''
+
+
+def dbCheck(cursor, word_info):
+    sql = "SELECT * FROM WORDS WHERE Word = %s;"
+    cursor.execute(sql, word_info[0])
+    result = cursor.fetchall()
+
+    return bool(result)
+
+
+'''
+- MySQL DB 처리를 수행하는 함수
+- 불규칙 용언의 정보가 주어지면 DB에 삽입 또는 변경하기 위해 이루어지는 전체적인 DB 처리를 포함
+@param word_info : DB에 존재하는 지 판별할 용언에 대한 정보 (type = tuple)
+                    (용언의 어간, 품사)로 이루어짐
+'''
+
+
+def dbProcess(word_info):
+    cursor, conn = connectDB()
+    print(word_info)
+    if not dbCheck(cursor, word_info):
+        dbInsert(cursor, conn, word_info)
+    else:
+        dbUpdate(cursor, conn, word_info)
+
+
+'''
+- 불규칙 용언 판별
+- getCorpus()를 통해 말뭉치 파일을 읽어들임
+- getIrregular()를 통해 말뭉치의 문장들에서 불규칙 용언 추출
+- dbProcess()를 통해 추출한 불규칙 용언을 DB에 저장
+'''
+
+
 # getCorpus
-original_corpus_list = getCorpus("\\1_구어체(1)_200226", 'kor', 0, 3)
+original_corpus_list = getCorpus("test", 'kor')
 print("getCorpus() : ", original_corpus_list)
 
+irregular_list = set()
 # getIrregular
-for i in range(3):
-    my_irregular_list = getIrregular(original_corpus_list[i])
-    print("getIrregular() : ", my_irregular_list)
+for i in range(len(original_corpus_list)):
+    isIregular = getIrregular(original_corpus_list[i])
+    for i in isIregular:
+        irregular_list.add(i)
+
+for i in irregular_list:
+    dbProcess(i)
