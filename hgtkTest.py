@@ -19,7 +19,9 @@ def textCompose(korList):
 
     # 문자열에서 자음이 몇번째 있는지를 cntList에 넣는다. ex) 공부하면하ㄹ수록 -> cnt = 5
     for text in korTextString:
-        if ord(text) <= ord('ㅎ') and text not in punctuation:
+        if text is " ":
+            continue
+        elif ord(text) <= ord('ㅎ') and text not in punctuation:
             cntList.append(cnt)
         cnt += 1
 
@@ -44,8 +46,3 @@ def textCompose(korList):
     # 분해된 문자열을 합친다.
     perfectString = hgtk.text.compose(inperfectString)
     return perfectString
-
-
-inputData = ['공부', '를', '하', '면', '하', 'ㄹ수록', '모르', '는',
-             '게', '많', '다는', '것', '을', '알', '게', '되', 'ㅂ니다', '.']
-print(textCompose(inputData))
