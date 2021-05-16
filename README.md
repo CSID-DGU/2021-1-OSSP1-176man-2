@@ -9,3 +9,4 @@ Doing our best!
 - 송호준
 - 신관수
 - 이강희
+- SHICE
