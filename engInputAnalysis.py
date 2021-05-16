@@ -12,10 +12,8 @@ nltk.word_tokenize() : 영어문장을 토근화
 nltk.pos_tag : 토큰한 단어에 따라 품사 지정
 '''
 
-inputEng = input()
 
-
-def engInputAnalysis(inputEng):
+def sentenceType(inputEng):
 
     tokens = nltk.word_tokenize(inputEng)
     tags = nltk.pos_tag(tokens)
@@ -28,7 +26,3 @@ def engInputAnalysis(inputEng):
         return "statment"
     else:
         return "etc"
-
-
-sentenceType = engInputAnalysis(inputEng)
-print(sentenceType)
