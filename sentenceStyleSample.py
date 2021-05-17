@@ -20,10 +20,13 @@ print(sentenceType)
 inputAnalyzer = naverPapago.translate(inputSentence)
 print(inputAnalyzer[0])
 
-# 입력으로 komoran.pos(korText) 받아, 품사에 따른 띄어쓰기 처리 🠒 return : list
+# 입력으로 komoran.pos(korText) 받아, 품사에 따른 띄어쓰기 처리 🠒 return : 띄어쓰기가 반영된 분석(이중list) 🠒 [komoran.morphs(), komoran.pos()]
 first_res = komoranSpacing.Spacing(inputAnalyzer[1])
-print(first_res)
+
+# 띄어쓰기를 포함한 komoran.pos() (띄어쓰기는 'BLK'로 처리.)
+# ex) [('아이', 'NNG'), ('들', 'XSN'), ('을', 'JKO'), (' ', 'BLK'), ('위하', 'VV'), ('아', 'EC')]
+print(first_res[1])
 
 # 띄어쓰기 처리된 list를 받아 합성. 🠒 return : string
-second_res = hgtkTest.textCompose(first_res)
-print(second_res)
+second_res = hgtkTest.textCompose(first_res[0])
+print(second_res)  # 띄어쓰기 처리된 string
