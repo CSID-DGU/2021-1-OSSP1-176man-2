@@ -2,7 +2,8 @@ from konlpy.tag import Komoran
 
 
 def Spacing(posList):
-    komoran = Komoran()
+
+    pos = []
     space = ['JKS', 'JKC', 'JKG', 'JKO', 'JKB', 'JKV', 'JKQ', 'JC', 'JX', 'EP', 'EF', 'EC',
              'ETN', 'ETM', 'XSN', 'XSV', 'XSA', 'SF', 'SP', 'VCP', 'VCN']  # 띄어쓰기를 하지 않는 품사들을 저장한 리스트
 
@@ -10,6 +11,7 @@ def Spacing(posList):
     # 각 낱말을 리스트에 합성하여 문장으로 만들어준다.
     for i in range(len(posList)):
         list.append(posList[i][0])
+        pos.append(posList[i])
 
         if (i == len(posList) - 1):
             break
@@ -19,5 +21,6 @@ def Spacing(posList):
                 continue
             else:
                 list.append(" ")
+                pos.append((' ', 'BLK'))
 
-    return list  # 재합성한 하나의 문장 출력
+    return [list, pos]  # 재합성한 하나의 문장 출력
