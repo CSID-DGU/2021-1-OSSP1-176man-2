@@ -23,6 +23,6 @@ def sentenceType(inputEng):
     elif inputEng[-1] in ['.', '!'] and "VB" in tags[0][1]:
         return "command"
     elif inputEng[-1] in ['.', '!'] and "VB" not in tags[0][1]:
-        return "statment"
+        return "statement"
     else:
         return "etc"
