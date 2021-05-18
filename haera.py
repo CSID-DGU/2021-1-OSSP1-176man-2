@@ -17,61 +17,71 @@ import engInputAnalysis
 inputSentence = input()
 sentenceType = engInputAnalysis.sentenceType(inputSentence)
 inputAnalyzer = naverPapago.translate(inputSentence)
-Analyerlist = komoranSpacing.Spacing(inputAnalyzer[1])
+Analyzerlist = komoranSpacing.Spacing(inputAnalyzer[1])
 
 
-def haera(Analyerlist, sentenceType):
-    print(Analyerlist)  # 종결어미 처리 전
+def haera(Analyzerlist, sentenceType):
+    print(Analyzerlist)  # 종결어미 처리 전
     print(sentenceType)  # 문장 종류
 
     if sentenceType == "statement":
         # ㄴ다/는다 : 종결어미 앞이 동사이면, 'ㅂ니다' → 'ㄴ다'로 수정
-        for i in range(len(Analyerlist[1])):
-            if Analyerlist[1][i] == ['ㅂ니다', 'EF'] and Analyerlist[1][i-1][1] in ['VV']:
-                Analyerlist[0][i] = 'ㄴ다'
-                Analyerlist[1][i] = ['ㄴ다', 'EF']
+        for i in range(len(Analyzerlist[1])):
+            if Analyzerlist[1][i] == ['ㅂ니다', 'EF'] and Analyzerlist[1][i-1][1] in ['VV']:
+                Analyzerlist[0][i] = 'ㄴ다'
+                Analyzerlist[1][i] = ['ㄴ다', 'EF']
 
-        # 다 : 종결어미 앞이 형용사, 서술격 조사일 경우, 'ㅂ니다' → '다'로 수정
-        for i in range(len(Analyerlist[1])):
-            if Analyerlist[1][i] == ['ㅂ니다', 'EF'] and Analyerlist[1][i-1][1] in ['VCP', 'VCN', 'VA']:
-                Analyerlist[0][i] = '다'
-                Analyerlist[1][i] = ['다', 'EF']
+        # 다 : 종결어미 앞이 서술격 조사일 경우, 'ㅂ니다' → '다'로 수정
+        for i in range(len(Analyzerlist[1])):
+            if Analyzerlist[1][i] == ['ㅂ니다', 'EF'] and Analyzerlist[1][i-1][1] in ['VCP', 'VCN']:
+                Analyzerlist[0][i] = '다'
+                Analyzerlist[1][i] = ['다', 'EF']
+
+        # 군 : 종결어미 앞이 형용사인 경우, '군' → '다'로 수정
+        for i in range(len(Analyzerlist[1])):
+            if Analyzerlist[1][i][1] == 'EF' and Analyzerlist[1][i-1][1] == 'VA':
+                Analyzerlist[0][i] = '다'
+                Analyzerlist[1][i] = ['다', 'EF']
+
+        # 어근 + 형용사 파생 접미사
+        for i in range(len(Analyzerlist[1])):
+            if Analyzerlist[1][i][1] == 'XSA' and Analyzerlist[1][i-1][1] == 'XR':
+                Analyzerlist[0][i+1] = '다'
+                Analyzerlist[1][i+1] = ['다', 'EF']
 
     elif sentenceType == "command":
         # 말아 → 마 : '말'을 '마'로 수정하고 '아' 삭제
-        for i in range(len(Analyerlist[1])):
-            if Analyerlist[1][i] == ['말', 'VX']:
-                Analyerlist[0][i] = '마'
-                Analyerlist[1][i] = ['마', 'VX']
-                Analyerlist[0][i+1] = ''
-                Analyerlist[1][i+1] = ['', '']
+        for i in range(len(Analyzerlist[1])):
+            if Analyzerlist[1][i] == ['말', 'VX']:
+                Analyzerlist[0][i] = '마'
+                Analyzerlist[1][i] = ['마', 'VX']
+                Analyzerlist[0][i+1] = '라'
+                Analyzerlist[1][i+1] = ['라', 'VX']
 
         # ex) 가라 → 가 : 종결어미 등장시 삭제
-        for i in range(len(Analyerlist[1])):
-            if Analyerlist[1][i][1] in ['EF']:
-                Analyerlist[0][i] = ''
-                Analyerlist[1][i] = ['', '']
+        for i in range(len(Analyzerlist[1])):
+            if Analyzerlist[1][i][1] in ['EF']:
+                Analyzerlist[0][i] = ''
+                Analyzerlist[1][i] = ['', '']
 
     elif sentenceType == "question":
+        # '시', '세' 제거
+        for i in range(len(Analyzerlist[1])):
+            if Analyzerlist[1][i][0] in ['시', '세']:
+                Analyzerlist[0][i] = ''
+                Analyzerlist[1][i] = ['', '']
+
         # 종결어미 : '니', '나'
-        for i in range(len(Analyerlist[1])):
-            if Analyerlist[1][i][1] in ['EF']:
-                Analyerlist[0][i] = '니'
-                Analyerlist[1][i][0] = '니'  # '나'
+        for i in range(len(Analyzerlist[1])):
+            if Analyzerlist[1][i][1] in ['EF']:
+                Analyzerlist[0][i] = '니'
+                Analyzerlist[1][i][0] = '니'  # '나'
 
-    # 해 → 하아 : '하'를 '해'로 바꾸고 '아' 삭제
-    for i in range(len(Analyerlist[1])-1):
-        if Analyerlist[1][i] == ['하', 'VV'] and '아' in Analyerlist[1][i+1][0]:
-            Analyerlist[1][i][0] = '해'
-            Analyerlist[0][i] = '해'
-            Analyerlist[1][i+1][0] = Analyerlist[1][i+1][0].replace('아', '')
-            Analyerlist[0][i+1] = Analyerlist[0][i+1].replace('아', '')
+    print(Analyzerlist)  # 종결어미 처리 후
 
-    print(Analyerlist)  # 종결어미 처리 후
-
-    CompleteString = hgtkTest.textCompose(Analyerlist[0])
+    CompleteString = hgtkTest.textCompose(Analyzerlist[0])
     print(CompleteString)  # morphs → string : string으로 문장 출력.
-    return Analyerlist
+    return Analyzerlist
 
 
-haera(Analyerlist, sentenceType)
+haera(Analyzerlist, sentenceType)
