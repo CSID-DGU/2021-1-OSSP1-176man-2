@@ -1,13 +1,4 @@
-import naverPapago
-import komoranSpacing
-import hgtkTest
-import engInputAnalysis
 import hgtk
-
-inputSentence = input()
-sentenceType = engInputAnalysis.sentenceType(inputSentence)
-inputAnalyzer = naverPapago.translate(inputSentence)
-morph_pos = komoranSpacing.Spacing(inputAnalyzer[1])
 
 pos_vowel = ['ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ'] # 양성 모음
 neg_vowel = ['ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅣ', 'ㅢ'] # 음성 모음
@@ -19,7 +10,7 @@ vb = ['VV', 'VA', 'VX', 'XSV', 'XSA'] # 용언
 input morph, pos 리스트와 문장종류
 output morph, pos 리스트
 '''
-def haeyo_ver1(morph_pos, sentenceType):
+def haeyo(morph_pos, sentenceType):
     for i in range(len(morph_pos[1])):
         # 종결어미를 찾는다.
         if morph_pos[1][i][1] == 'EF' :
@@ -71,9 +62,3 @@ def haeyo_ver1(morph_pos, sentenceType):
                     morph_pos[1][i][0] = '예요'
     
     return morph_pos # morph, pos 리스트형으로 반환
-
-haeyo_test = haeyo_ver1(morph_pos, sentenceType)
-print(haeyo_test)
-
-second_res = hgtkTest.textCompose(haeyo_test[0])
-print(second_res)
