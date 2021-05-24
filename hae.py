@@ -19,7 +19,7 @@ consonant = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ
 noun = ['NNG', 'NNP', 'NNB', 'NR', 'NP', 'XSN'] 
 vb = ['VV', 'VA', 'XSV', 'XSA', 'VX','EP']
 
-def hae2(morph_pos):
+def hae2(morph_pos, sentenceType):
     for i in range(len(morph_pos[1])):
         if morph_pos[1][i][1] == 'EC' and morph_pos[1][i - 1][0] == '시':
             morph_pos[1][i][0] = ''
