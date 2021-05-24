@@ -3,11 +3,6 @@ import komoranSpacing
 import hgtkTest
 import engInputAnalysis
 import hgtk
-'''
-    기존의 hae는 오류가 많고 예외처리가 되어있지 않은 것도 많음
-    '해요' 체에서 '해'체에 필요한 요소를 추가하고 수정
-    
-'''
 
 
 pos_vowel = ['ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ']
