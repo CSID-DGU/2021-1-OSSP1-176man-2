@@ -60,7 +60,7 @@ def haera(Analyzerlist, sentenceType):
 
         # ex) 가라 → 가 : 종결어미 등장시 삭제
         for i in range(len(Analyzerlist[1])):
-            if Analyzerlist[1][i][1] in ['EF']:
+            if Analyzerlist[1][i][1] in ['EF'] and Analyzerlist[1][i][0] != "어라":
                 Analyzerlist[0][i] = ''
                 Analyzerlist[1][i] = ['', '']
 
