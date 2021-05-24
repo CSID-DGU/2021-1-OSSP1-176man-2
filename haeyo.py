@@ -13,7 +13,7 @@ pos_vowel = ['ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ'] # �
 neg_vowel = ['ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅣ', 'ㅢ'] # 음성 모음
 consonant = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'] # 자음
 noun = ['NNG', 'NNP', 'NNB', 'NR', 'NP', 'XSN'] # 체언
-vb = ['VV', 'VA', 'XSV', 'XSA'] # 용언
+vb = ['VV', 'VA', 'VX', 'XSV', 'XSA'] # 용언
 
 '''
 input morph, pos 리스트와 문장종류
@@ -23,13 +23,12 @@ def haeyo_ver1(morph_pos, sentenceType):
     for i in range(len(morph_pos[1])):
         # 종결어미를 찾는다.
         if morph_pos[1][i][1] == 'EF' :
+            # '하' 불규칙 처리를 위해 따로 빼놓음
+            if morph_pos[1][i - 1][0] == '하':
+                morph_pos[0][i] = '아요'
+                morph_pos[1][i][0] = '아요'
             # 전 형태소의 품사가 용언일 때
-            if morph_pos[1][i - 1][1] in vb:
-                # '하' 불규칙 처리를 위해 따로 빼놓음
-                if morph_pos[1][i - 1][0] == '하':
-                    morph_pos[0][i] = '아요'
-                    morph_pos[1][i][0] = '아요'
-                    continue
+            elif morph_pos[1][i - 1][1] in vb:
                 tmp = morph_pos[1][i - 1][0]
                 verb = hgtk.letter.decompose(tmp[-1])
                 # 전 형태소의 받침이 있을 때
