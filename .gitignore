@@ -2,4 +2,3 @@ config.py
 __pycache__
 .ipynb_checkpoints
 JPype1-1.1.2-cp36-cp36m-win_amd64.whl
-.vscode
