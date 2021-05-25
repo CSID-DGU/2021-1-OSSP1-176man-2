@@ -1,20 +1,8 @@
-import naverPapago
-import komoranSpacing
-import hgtkTest
-import engInputAnalysis
 import hgtk
 
 '''
     input으로 들어온 번역된 문장을 분석하여 종결어미 부분을 합쇼체의 종결어미로 변경해준다.
 '''
-
-inputSentence = input()
-sentenceType = engInputAnalysis.sentenceType(inputSentence)
-inputAnalyzer = naverPapago.translate(inputSentence)
-Analyzerlist = komoranSpacing.Spacing(inputAnalyzer[1])
-
-
-print(Analyzerlist[1])
 
 
 def hapshow(Analyzerlist, sentenceType):
@@ -67,9 +55,3 @@ def hapshow(Analyzerlist, sentenceType):
                     Analyzerlist[0][i] = "십시오"
 
     return Analyzerlist
-
-
-space_sent = hapshow(Analyzerlist, sentenceType)
-
-second_res = hgtkTest.textCompose(space_sent[0])
-print(second_res)  # 띄어쓰기 처리된 string
