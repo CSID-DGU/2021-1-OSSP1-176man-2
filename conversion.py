@@ -60,13 +60,20 @@ return : 변환이 필요한 경우 변환할 단어의 정보
 
 def dbProcess(word_info):
     if dbCheck(word_info):
-        sql = "SELECT P.Word, P.Class, P.Conjugation FROM WORDS H, WORDS P, CONVERSION WHERE H.Word = %s AND H.Wid = Hwid AND Pwid = P.Wid;"
+        sql = "SELECT P.Word, P.Class FROM WORDS H, WORDS P, CONVERSION WHERE H.Word = %s AND H.Wid = Hwid AND Pwid = P.Wid;"
         cursor.execute(sql, word_info[0])
-        result = list(cursor.fetchall()[0])
 
-        return result
+        result = list(cursor.fetchall())
+        if result:
+            word_info = list(result[0])
     else:
         return
+
+    sql = "SELECT Conjugation FROM WORDS WHERE Word = %s;"
+    cursor.execute(sql, word_info[0])
+    result = word_info + list(cursor.fetchall()[0])
+
+    return result
 
 
 '''
@@ -82,7 +89,9 @@ def conversion(sentence):
     for idx, symbol in enumerate(sentence):
         if(symbol[1] in target):
             conv = dbProcess(symbol)
-            sentence[idx] = list(conv)
+            if conv[2] == 1:
+                sentence.append(["(Irr)", True])
+            sentence[idx] = list(conv)[:-1]
     return sentence
 
 
