@@ -1,14 +1,5 @@
-import haera
-import komoranSpacing
 import pymysql
 import config
-from konlpy.tag import Komoran
-import hgtkTest
-
-inputSentence = input()
-komoran = Komoran()
-li = komoran.pos(inputSentence)
-li_ = komoranSpacing.Spacing(li)
 
 '''
 - MySQL DB 연결
@@ -79,26 +70,23 @@ def dbProcess(word_info):
 '''
 - 형태소 단위로 주어진 문장에서 특정 단어 변환을 수행하는 함수
 - DB에서 형태소 정보를 탐색하며 필요 시 단어 변환 수행
+- 불규칙 변환 처리가 필요한 경우 flag 1을 추가
 @param sentence : 띄어쓰기가 처리된 [형태소, 품사]의 집합 형태의 문장
 return : 단어 변환이 이루어진 후의 sentence
 '''
 
 
-def conversion(sentence):
+def conversion(sentenceInfo):
     target = ['NNG', 'VV', 'VA', 'XSV']
-    for idx, symbol in enumerate(sentence):
+    flag = 0
+    for idx, symbol in enumerate(sentenceInfo[1]):
         if(symbol[1] in target):
             conv = dbProcess(symbol)
             if conv[2] == 1:
-                sentence.append(["(Irr)", True])
-            sentence[idx] = list(conv)[:-1]
-    return sentence
+                flag = 1
+            sentenceInfo[1][idx] = list(conv)[:-1]
 
+    sentenceInfo.append(flag)
+    sentenceInfo[0] = list(map(lambda x: x[0], sentenceInfo[1]))
 
-# conversion
-li = conversion(haera.haera(li_, "statement")[1])
-print(li)
-li_ = list(map(lambda x: x[0], li))
-print(li_)
-CompleteString = hgtkTest.textCompose(li_)
-print(CompleteString)
+    return sentenceInfo
