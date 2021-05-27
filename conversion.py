@@ -58,11 +58,13 @@ def dbProcess(word_info):
         if result:
             word_info = list(result[0])
     else:
-        return
+        return word_info + [0]
 
     sql = "SELECT Conjugation FROM WORDS WHERE Word = %s;"
     cursor.execute(sql, word_info[0])
     result = word_info + list(cursor.fetchall()[0])
+    if result[2] is None:
+        result[2] = 0
 
     return result
 
