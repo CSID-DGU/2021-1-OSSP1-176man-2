@@ -65,7 +65,7 @@ def vowelReduction(morphs):
         # 시+어 → 세
         if 'ㅅㅣᴥ' in hgtkList[i] and 'ㅇㅓᴥ' in hgtkList[i+1]:
             hgtkList[i] = 'ㅅㅔᴥ'
-            hgtkList[i+1] = 'ᴥ'
+            hgtkList[i+1] = 'ㅇㅛᴥ'
 
         # 시+었 → 셨
         if 'ㅅㅣᴥ' in hgtkList[i] and 'ㅇㅓㅆᴥ' in hgtkList[i+1]:

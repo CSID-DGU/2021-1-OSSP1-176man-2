@@ -38,8 +38,7 @@ def sentenceType(inputEng):
             if ('.', '.') in l or ('!', '!') in l:
                 firstWord = l[0]
                 break
-        print(splitList)
-        print(firstWord)
+
         if "VB" in firstWord[1] or firstWord[0] in exceptWord:
             return "command"
         else:
@@ -53,7 +52,7 @@ def sentenceType(inputEng):
         elif (inputEng[-1] in ['.', '!'] and "VB" in tags[0][1]) or tags[0][0] in exceptWord:
             return "command"
         # 첫 단어가 동사가 아닌 부사가 오더라도, 부사+동사 or 부사+,+동사 인지 확인하여 명령문 처리
-        elif tags[0][1] is "RB" and ("VB" in tags[1][1] or (tags[1][1] is "," and "VB" in tags[2][1])):
+        elif 'RB' in tags[0][1] and ("VB" in tags[1][1] or (tags[1][1] is "," and "VB" in tags[2][1])):
             return "command"
 
         elif inputEng[-1] in ['.', '!'] and "VB" not in tags[0][1]:
@@ -61,7 +60,3 @@ def sentenceType(inputEng):
 
         else:
             return "etc"
-
-
-# inputEng = "When i was young, i go to the place where many people are in and on the house."
-# print(sentenceType(inputEng))
