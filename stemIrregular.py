@@ -13,6 +13,9 @@ import hgtk
 - 어미에 따라 어간 변환 여부를 결정하도록 수정
 - 'ㄷ', 'ㅅ' 제외 세부 수정 필요
 
+@param kor_list : Papago 번역이 완료된 한글 문장
+@param style_transform_list : 문체 변환이 완료된 한글 문장
+
 활용되지 않은 어간일 때 활용 처리
 ex) 걷(다) -> 걸(어)
 ex) 가볍(다) -> 가벼(워)
