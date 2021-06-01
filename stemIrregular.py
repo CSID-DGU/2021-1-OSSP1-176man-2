@@ -5,16 +5,19 @@ import hgtk
 '''
 'ㄷ', 'ㅂ', 'ㅅ', '르', '우' 에 대한 불규칙 변형 처리
 
-@param kor_list : Papago 번역이 완료된 한글 문장
-@param style_transform_list : 문체 변환이 완료된 한글 문장
-
 2021-05-26 
 - '르' 처리 제외 초안 작성 완료
 
-2021-06-01
+2021-06-01 (1차 수정)
 - 문체 변환 반영
 - 어미에 따라 어간 변환 여부를 결정하도록 수정
 - 'ㄷ', 'ㅅ' 제외 세부 수정 필요
+
+2021-06-01 (2차 수정)
+- 'ㅂ', '르', '우' 수정 완료
+
+@param kor_list : Papago 번역이 완료된 한글 문장
+@param style_transform_list : 문체 변환이 완료된 한글 문장
 
 활용되지 않은 어간일 때 활용 처리
 ex) 걷(다) -> 걸(어)
@@ -55,7 +58,7 @@ def stemIrregular(kor_list, style_transform_list):
             if stem[-2] == 'ㅂ' and ((ending[0] == 'ㅇ' and ending[1] == 'ㅓ')): # and ending[1] == 'ㅓ') or (ending[0] == 'ㅇ' and ending[1] == 'ㅜ' and ending[3] == 'ㄴ' and ending[4] == 'ㅣ')):
                 stem = stem[:-2]
                 stem.append('ᴥ')
-                ending.insert(1, 'ㅜ')
+                ending[1] = 'ㅝ'
                 return_sentence[1][idx][0] = hgtk.text.compose(stem)
                 return_sentence[1][idx+1][0] =  hgtk.text.compose(ending)
 
@@ -67,9 +70,11 @@ def stemIrregular(kor_list, style_transform_list):
             
             ''' 'ㄹ' 불규칙 활용: 어간이 '_르(+ㄴ)'이 'ㄹ'로 줄고 어미가 '아/어 에서 '라/러'로 바뀐다. '''
             if stem[3] == 'ㄹ' and stem[4] == 'ㅡ' and (ending[1] == 'ㅏ' or ending[1] == 'ㅓ'):
-                stem = stem[:-3]
+                stem = stem[:-4]
+                print(stem)
                 stem.append('ㄹ')
                 stem.append('ᴥ')
+                print(stem)
                 ending[0] = 'ㄹ'
                 return_sentence[1][idx][0] = hgtk.text.compose(stem)
                 return_sentence[1][idx+1][0] = hgtk.text.compose(ending)
