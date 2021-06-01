@@ -3,10 +3,10 @@ import hgtk
 '''
     hgtkTest.py에 들어갈 Code.
     모음축약 : 1) 반모음 ㅣ 계열, 2) 반모음 ㅗ/ㅜ 계열
-    시 처리 :  시+어 → 세, 시+었 → 셨
+    시 처리 :  시+어 → 셔, 시+어요 → 세, 시+었 → 셨
     
-    input : 문체변환처리가 끝난 komoran.morphs()
-    output : 모음축약과 시처리를 한 komoran.morhs() 
+    input : 문체변환처리가 끝난 komoran.morphs(), komoran.pos()
+    output : 모음축약과 시처리를 한 komoran.morphs(), komoran.pos()
 '''
 
 
