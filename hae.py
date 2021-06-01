@@ -1,12 +1,4 @@
 import hgtk
-import naverPapago
-import komoranSpacing
-import engInputAnalysis
-import hgtkTest
-
-inputSentence = input()
-sentenceType = engInputAnalysis.sentenceType(inputSentence) # 문장종류 확인
-sentenceInfo = naverPapago.translate(inputSentence) # 파파고API로 번역 및 Komoran으로 형태소 분석
 
 pos_vowel = ['ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ']
 neg_vowel = ['ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅣ', 'ㅢ']
@@ -61,7 +53,3 @@ def hae(sentenceInfo, sentenceType):
                     sentenceInfo[1][i][0] = '야'
     sentenceInfo[0] = list(map(lambda x: x[0], sentenceInfo[1]))
     return sentenceInfo # morph, pos 리스트형으로 반환
-
-sentenceInfo = hae(komoranSpacing.Spacing(sentenceInfo[1]), 'Command')
-
-print(hgtkTest.textCompose(sentenceInfo[0]))
