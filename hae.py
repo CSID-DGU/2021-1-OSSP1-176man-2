@@ -8,7 +8,7 @@ vb = ['VV', 'VA', 'XSV', 'XSA', 'VX', 'EP']
 
 def hae(sentenceInfo, sentenceType):
     for i in range(len(sentenceInfo[1])):
-        if sentenceInfo[1][i][1] == 'EC' and sentenceInfo[1][i - 1][0] == '시':
+        if sentenceInfo[1][i][1] == 'EC' or sentenceInfo[1][i][1] == 'EP' and sentenceInfo[1][i - 1][0] == '시':
             sentenceInfo[1][i][0] = ''
             sentenceInfo[1][i - 1][0] = ''
              
