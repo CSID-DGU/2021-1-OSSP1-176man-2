@@ -21,7 +21,7 @@ def haeyo(sentenceInfo, sentenceType):
                 tmp = sentenceInfo[1][i - 1][0]
                 verb = hgtk.letter.decompose(tmp[-1])
                 # 전 형태소의 받침이 있을 때
-                if hgtk.checker.has_batchim(verb[-1]):
+                if hgtk.checker.has_batchim(tmp[-1]):
                     # 전 형태소의 모음이 양성일 때
                     if verb[-2] in pos_vowel:
                         sentenceInfo[1][i][0] = '아요'
@@ -55,7 +55,7 @@ def haeyo(sentenceInfo, sentenceType):
                 tmp = sentenceInfo[1][i - 1][0]
                 verb = hgtk.letter.decompose(tmp[-1])
                 # 전 형태소의 받침이 있을 때
-                if hgtk.checker.has_batchim(verb[-1]):
+                if hgtk.checker.has_batchim(tmp[-1]):
                     # 전 형태소의 모음이 양성일 때
                     if verb[-2] in pos_vowel:
                         sentenceInfo[1][i][0] = '아요'
