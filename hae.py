@@ -7,11 +7,7 @@ noun = ['NNG', 'NNP', 'NNB', 'NR', 'NP', 'XSN']
 vb = ['VV', 'VA', 'XSV', 'XSA', 'VX', 'EP']
 
 def hae(sentenceInfo, sentenceType):
-    for i in range(len(sentenceInfo[1])):
-        if sentenceInfo[1][i][1] == 'EC' or sentenceInfo[1][i][1] == 'EP' and sentenceInfo[1][i - 1][0] == '시':
-            sentenceInfo[1][i][0] = ''
-            sentenceInfo[1][i - 1][0] = ''
-             
+    for i in range(len(sentenceInfo[1])):         
         # 종결어미를 찾는다.
         if sentenceInfo[1][i][1] == 'EF' :
             # 전 형태소의 품사가 용언일 때
@@ -30,9 +26,12 @@ def hae(sentenceInfo, sentenceType):
                     # 전 형태소의 모음이 음성일 때    
                     elif verb[-2] in neg_vowel:
                         sentenceInfo[1][i][0] = '어'
-                # 전 형태소의 받침이 없고 'ㅏ'나 'ㅓ'로 끝날 때
-                elif verb[-2] == 'ㅏ' or verb[-2] == 'ㅓ':
+                # 전 형태소의 받침이 없고 'ㅓ'로 끝날 때
+                elif verb[-2] == 'ㅓ':
                     sentenceInfo[1][i][0] = '어'
+                # 전 형태소의 받침이 없고 'ㅏ'로 끝날 때 ex)집에 가 에서 '가'
+                elif verb[-2] == 'ㅏ':
+                    sentenceInfo[1][i][0] = '아' 
                 # 전 형태소의 받침이 없고 모음이 양성일 때
                 elif verb[-2] in pos_vowel:
                     sentenceInfo[1][i][0] = '아'
@@ -54,4 +53,3 @@ def hae(sentenceInfo, sentenceType):
                     sentenceInfo[1][i][0] = '야'
     sentenceInfo[0] = list(map(lambda x: x[0], sentenceInfo[1]))
     return sentenceInfo # morph, pos 리스트형으로 반환
-
