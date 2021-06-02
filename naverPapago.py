@@ -1,3 +1,4 @@
+#encoding=utf-8
 import json
 import sys
 import os
@@ -27,7 +28,13 @@ def translate(inputSentence):
 
     jsonObject = json.loads(response_body.decode('utf-8'))
     korText = jsonObject.get("message").get("result").get("translatedText")
+    print(korText)
+    return korText
 
-    komoran = Komoran()
+    # komoran = Komoran()
 
-    return [komoran.morphs(korText), komoran.pos(korText)]
+    # return [komoran.morphs(korText), komoran.pos(korText)]
+
+if __name__ == '__main__':
+    str1 = input()
+    print(translate(str1))
