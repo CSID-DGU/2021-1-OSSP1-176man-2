@@ -1,5 +1,5 @@
 import main
-import copy
+import hgtkTest
 import hgtk
 
 '''
@@ -16,8 +16,14 @@ import hgtk
 2021-06-01 (2차 수정)
 - 'ㅂ', '르', '우' 수정 완료
 
-@param kor_list : Papago 번역이 완료된 한글 문장
-@param sentenceInfo : 문체 변환이 완료된 한글 문장
+2021-06-01 (3차 수정)
+- '시' 또는 '으시' 처리 추가
+
+2021-06-03 (4차 수정)
+- '시' 또는 '으시' 처리 추가 완료
+- '우' 수정 완료
+
+sentenceInfo : 문체 변환이 완료된 한글 문장
 
 활용되지 않은 어간일 때 활용 처리
 ex) 걷(다) -> 걸(어)
@@ -46,35 +52,49 @@ def stemIrregular(sentenceInfo):
             ending = list(hgtk.text.decompose(sentenceInfo[1][idx+1][0]))
 
             ''' 'ㄷ' 불규칙 활용: '어간'의 마지막이 'ㄷ'으로 끝나고 어미'가 '어' 또는 '으니'로 시작한다. '''
-            if stem[-2] == 'ㄷ' and ((ending[0] == 'ㅇ' and ending[1] == 'ㅓ')): # or (ending[0] == 'ㅇ' and ending[1] == 'ㅡ' and ending[3] == 'ㄴ' and ending[4] == 'ㅣ')):
-                stem[-2] = 'ㄹ' # 'ㄷ'을 'ㄹ'로 활용시킨다.
-                sentenceInfo[1][idx][0] = hgtk.text.compose(stem) # 자모합성 후 활용된 어간으로 변환
+            if stem[-2] == 'ㄷ':
+                if (ending[0] == 'ㅇ' and ending[1] == 'ㅓ') or (ending[0] == 'ㅇ' and ending[1] == 'ㅡ' ):
+                    stem[-2] = 'ㄹ' # 'ㄷ'을 'ㄹ'로 활용시킨다.
+                    sentenceInfo[1][idx][0] = hgtk.text.compose(stem) # 자모합성 후 활용된 어간으로 변환
 
             ''' 'ㅂ' 불규칙 활용: '어간'의 마지막이 'ㅂ'으로 끝나고 어미'가 '워' 또는 '우니'로 시작한다. '''
-            if stem[-2] == 'ㅂ' and ((ending[0] == 'ㅇ' and ending[1] == 'ㅓ')): # and ending[1] == 'ㅓ') or (ending[0] == 'ㅇ' and ending[1] == 'ㅜ' and ending[3] == 'ㄴ' and ending[4] == 'ㅣ')):
-                stem = stem[:-2]
-                stem.append('ᴥ')
-                ending[1] = 'ㅝ'
-                sentenceInfo[1][idx][0] = hgtk.text.compose(stem)
-                sentenceInfo[1][idx+1][0] =  hgtk.text.compose(ending)
+            if stem[-2] == 'ㅂ':
+                if ((ending[0] == 'ㅇ' and ending[1] == 'ㅓ')):
+                    stem = stem[:-2]
+                    stem.append('ᴥ')
+                    ending[1] = 'ㅝ'
+                    sentenceInfo[1][idx][0] = hgtk.text.compose(stem)
+                    sentenceInfo[1][idx+1][0] =  hgtk.text.compose(ending)
+                if ending[0] == 'ㅇ' and ending[1] == 'ㅡ' and ending[3] == 'ㅅ' and ending[4] == 'ㅣ':
+                    stem = stem[:-2]
+                    stem.append('ᴥ')
+                    ending[1] = 'ㅜ'
+                    sentenceInfo[1][idx][0] = hgtk.text.compose(stem)
+                    sentenceInfo[1][idx+1][0] = hgtk.text.compose(ending)
 
             ''' 'ㅅ' 불규칙 활용: '어간'의 마지막이 'ㅅ'으로 끝나고 어미가 홀소리로 시작한다. '''
-            if stem[-2] == 'ㅅ' and ending[0] == 'ㅇ':
-                stem = stem[:-2]
-                stem.append('ᴥ')
-                sentenceInfo[1][idx][0] = hgtk.text.compose(stem) 
-            
+            if stem[-2] == 'ㅅ':
+                if ending[0] == 'ㅇ':
+                    stem = stem[:-2]
+                    stem.append('ᴥ')
+                    sentenceInfo[1][idx][0] = hgtk.text.compose(stem) 
+                # elif ending[0] == 'ㅇ' and ending[1] == 'ㅡ' and ending[3] == 'ㅅ' and ending[4] == 'ㅣ':
+                #     stem = stem[:-2]
+                #     stem.append('ᴥ')
+                #     sentenceInfo[1][idx][0] = hgtk.text.compose(stem)
+                
             ''' 'ㄹ' 불규칙 활용: 어간이 '_르(+ㄴ)'이 'ㄹ'로 줄고 어미가 '아/어 에서 '라/러'로 바뀐다. '''
-            if stem[3] == 'ㄹ' and stem[4] == 'ㅡ' and (ending[1] == 'ㅏ' or ending[1] == 'ㅓ'):
-                stem = stem[:-4]
-                stem.append('ㄹ')
-                stem.append('ᴥ')
-                ending[0] = 'ㄹ'
-                sentenceInfo[1][idx][0] = hgtk.text.compose(stem)
-                sentenceInfo[1][idx+1][0] = hgtk.text.compose(ending)
+            if len(stem) > 3:
+                if stem[3] == 'ㄹ' and stem[4] == 'ㅡ' and (ending[1] == 'ㅏ' or ending[1] == 'ㅓ'):
+                    stem = stem[:-4] 
+                    stem.append('ㄹ')
+                    stem.append('ᴥ')
+                    ending[0] = 'ㄹ'
+                    sentenceInfo[1][idx][0] = hgtk.text.compose(stem)
+                    sentenceInfo[1][idx+1][0] = hgtk.text.compose(ending)
 
             ''' '우' 불규칙 활용: 푸다->퍼 가 유일 '''
-            if stem[0] == 'ㅍ' and stem[1] == 'ㅜ':
+            if stem[0] == 'ㅍ' and stem[1] == 'ㅜ' and ending[1] == 'ㅓ':
                 stem[-2] = 'ㅓ'
                 sentenceInfo[1][idx][0] = hgtk.text.compose(stem)
 
