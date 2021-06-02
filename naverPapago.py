@@ -1,3 +1,4 @@
+#encoding=utf-8
 import json
 import sys
 import os
@@ -31,3 +32,28 @@ def translate(inputSentence):
     komoran = Komoran()
 
     return [komoran.morphs(korText), komoran.pos(korText)]
+
+def translate_en2ko(inputSentence):
+    encText = urllib.parse.quote(inputSentence)
+    data = "source=en&target=ko&text=" + encText
+    url = "https://openapi.naver.com/v1/papago/n2mt"
+
+    request = urllib.request.Request(url)
+    request.add_header("X-Naver-Client-Id", client_id)
+    request.add_header("X-Naver-Client-Secret", client_secret)
+    response = urllib.request.urlopen(request, data=data.encode("utf-8"))
+    rescode = response.getcode()
+    if(rescode == 200):
+        response_body = response.read()
+        # print(response_body.decode('utf-8'))
+    else:
+        print("Error Code:" + rescode)
+
+    jsonObject = json.loads(response_body.decode('utf-8'))
+    korText = jsonObject.get("message").get("result").get("translatedText")
+    return korText
+
+
+if __name__ == '__main__':
+    str1 = input()
+    print(translate_en2ko(str1))
