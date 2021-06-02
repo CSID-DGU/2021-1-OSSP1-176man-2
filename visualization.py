@@ -13,7 +13,7 @@ def index1():
         return render_template('show3.html')
     elif request.method == "POST":
         data = request.form
-        trans = translate(data["body"])
+        trans = translate_en2ko(data["body"])
         return render_template("show3.html", name=trans, origin=data["body"])
 
 if __name__ == '__main__':
