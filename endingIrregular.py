@@ -7,14 +7,15 @@
 '''
 
 
-def endingIrregular(korList):
+def endingIrregular(sentenceInfo):
 
-    for i in range(len(korList)-1):
-        if(korList[i][len(korList[i])-1] == '하' and korList[i+1][0] == '아'):
-            korList[i+1] = '여' + korList[i+1][1:]
-        elif(korList[i][len(korList[i])-2:] == '푸르' and korList[i+1][0] == '어'):
-            korList[i+1] = '러' + korList[i+1][1:]
-        elif(korList[i][len(korList[i])-2:] == '이르' and korList[i+1][0] == '어'):  # 동음이의어 처리 추가 필요
-            korList[i+1] = '러' + korList[i+1][1:]
+    for i in range(len(sentenceInfo)-1):
+        if(sentenceInfo[i][len(sentenceInfo[i])-1] == '하' and sentenceInfo[i+1][0] == '아'):
+            sentenceInfo[i+1] = '여' + sentenceInfo[i+1][1:]
+        elif(sentenceInfo[i][len(sentenceInfo[i])-2:] == '푸르' and sentenceInfo[i+1][0] == '어'):
+            sentenceInfo[i+1] = '러' + sentenceInfo[i+1][1:]
+        # 동음이의어 처리 추가 필요
+        elif(sentenceInfo[i][len(sentenceInfo[i])-2:] == '이르' and sentenceInfo[i+1][0] == '어'):
+            sentenceInfo[i+1] = '러' + sentenceInfo[i+1][1:]
 
-    return korList
+    return sentenceInfo

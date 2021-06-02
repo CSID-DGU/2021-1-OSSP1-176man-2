@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>{{ name }} 翻译测试</title>
+    <title>翻译测试</title>
     <!-- jQuery 파일.boottstrap. min. js 전에 꼭 도입 해 주세요. -->
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js" rel="external nofollow"></script>
 
@@ -14,6 +14,18 @@
 
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css"
           rel="external nofollow" target="_blank">
+   <style type="text/css">
+   	.form-control:focus{
+   		box-shadow: none;
+   	}
+   	.green{
+   		background: #22de69 !important;
+   		border-color:  #22de69 !important;
+   	}
+   	.border-light {
+	    border-color: #eff0f1!important;
+	}
+   </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -32,39 +44,37 @@
     </div>
 </nav>
 <div class="container">
-    <div class="row mt-2">
-        <div class="col-5 mb-2">
-            <div class="card h-100">
-                <h4 class="card-header">번역 할 내용 을 입력 하 세 요</h4>
-                <div class="card-body">
+    <div class="row mt-4">
+        <div class="col-6">
+            <div class="card h-100 rounded-0">
+                <h4 class="border-light  card-header bg-transparent">번역 할 내용 을 입력 하 세 요</h4>
+                <div class="card-body ">
                     <form method="post" action=".">
                         <!-- Django 에서 POST 데이터 가 필요 한 곳 은 csrftoken -->
                         <div class="form-group">
-                            <textarea type="text" class="form-control" id="body" name="body" rows="12">{{origin}}</textarea>
-                            <p><input type="submit" value="submit"/> </p>
+                            <textarea type="text" class="border-0 form-control " id="body" name="body" rows="12" placeholder="에서 POST 데이터 가 필요 한 곳 은"> {{ origin }}</textarea>
                         </div>
                     </form>
                 </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary" style="text-align: center;">번역 하 다.</a>
+                <div class="border-light card-footer bg-transparent position-relative" style="height: 60px;">
+                    <a href="#" class="btn btn-primary position-absolute rounded-0 h-100 green" style="top:0px; right:-1px; line-height: 45px;">번역 하 다.</a>
                 </div>
             </div>
         </div>
-        <div class="col-1">
-        </div>
-        <div class="col-6 mb-2">
-            <div class="card h-100">
-                <h4 class="card-header">다음은 번역 한 내용</h4>
+
+        <div class="col-6">
+            <div class="card h-100 rounded-0">
+                <h4 class="border-light card-header bg-transparent">다음은 번역 한 내용</h4>
                 <div class="card-body">
                     <form method="post" action=".">
                         <!-- Django 에서 POST 데이터 가 필요 한 곳 은 csrftoken -->
                         <div class="form-group">
-                            <textarea type="text" class="form-control" id="body" name="body" rows="12"> {{name}}</textarea>
+                            <textarea type="text" class="border-0 form-control" id="body" name="body" rows="12" placeholder="에서 POST 데이터 가 필요 한 곳 은"> {{name}}</textarea>
                         </div>
                     </form>
                 </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary" style="text-align: center;">초기 화</a>
+                <div class="border-light card-footer bg-transparent position-relative" style="height: 60px;">
+                    <a href="#" class="btn btn-primary position-absolute rounded-0 h-100 green" style="top:0px; right: -1px; line-height: 45px;">초기 화</a>
                 </div>
             </div>
         </div>
