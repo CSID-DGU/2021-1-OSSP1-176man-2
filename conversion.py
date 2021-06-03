@@ -32,12 +32,25 @@ return : DB 내에 해당 용언의 유무 (있을 시 TRUE, 없을 시 FALSE)
 '''
 
 
-def dbCheck(word_info):
-    sql = "SELECT * FROM WORDS WHERE Word = %s;"
-    cursor.execute(sql, word_info[0])
-    result = cursor.fetchall()
+def dbCheck(word_info, table):
+    sql = "SELECT Wid FROM WORDS WHERE Word = %s AND Class = %s;"
+    cursor.execute(sql, word_info)
+    wid = cursor.fetchall()
 
-    return bool(result)
+    if table == 'WORDS':
+        return wid
+    elif table == 'CONVERSION':
+        sql = "SELECT * FROM CONVERSION WHERE Wid = %s;"
+        cursor.execute(sql,  wid)
+        result = cursor.fetchall()
+
+        return bool(result)
+    elif table == 'ENGWORDS':
+        sql = "SELECT * FROM ENGWORDS WHERE Wid = %s;"
+        cursor.execute(sql, wid)
+        result = cursor.fetchall()
+
+        return bool(result)
 
 
 '''
@@ -49,24 +62,59 @@ return : 변환이 필요한 경우 변환할 단어의 정보
 '''
 
 
-def dbProcess(word_info):
-    if dbCheck(word_info):
-        sql = "SELECT P.Word, P.Class FROM WORDS H, WORDS P, CONVERSION WHERE H.Word = %s AND H.Wid = Hwid AND Pwid = P.Wid;"
-        cursor.execute(sql, word_info[0])
+def dbProcess(word_info, eng_pos, Hflag):
+    wid = dbCheck(word_info, "WORDS")
+    if wid:     # DB에 있어?
+        if dbCheck(word_info, "ENGWORDS"):      # ENGWORDS에 있어?
+            for e in eng_pos:
+                sql = "SELECT Conflag, Irrflag FROM ENGWORDS WHERE Wid = %s AND Eng = %s;"
+                cursor.execute(sql, (wid, e))
+                result = list(cursor.fetchall())
+                if result:
+                    result = result[0]
+                    break
+            if result:
+                if result[0] == 1:
+                    if Hflag == 1:
+                        sql = "SELECT Word, PconFlag FROM WORDS, CONVERSION WHERE Hwid = %s AND Wid = Pwid;"
+                        cursor.execute(sql, wid)
+                        result = list(cursor.fetchall())
+                    elif Hflag == 0:
+                        sql = "SELECT Word, HconFlag FROM WORDS, CONVERSION WHERE Pwid = %s AND Wid = Hwid;"
+                        cursor.execute(sql, wid)
+                        result = list(cursor.fetchall())
+                    if result:
+                        result = result[0]
+                        word_info[0] = result[0]
+                        word_info.append(result[0])
+                    else:
+                        word_info.append(0)
+                else:
+                    result = result[0]
+                    word_info.append(result[1])
+                    return word_info
+            else:
+                word_info.append(0)
+                return word_info
+        else:
+            sql = "SELECT P.Word, P.Conjugation FROM WORDS H, WORDS P, CONVERSION WHERE H.Word = %s AND H.Wid = Hwid AND Pwid = P.Wid;"
+            cursor.execute(sql, word_info[0])
+            result = list(cursor.fetchall())
+            if not result:
+                sql = "SELECT Word, Conjugation FROM WORDS WHERE Wid = %s;"
+                cursor.execute(sql, wid)
+                result = cursor.fetchall()
+            result = result[0]
+            word_info[0] = result[0]
+            word_info.append(result[1])
 
-        result = list(cursor.fetchall())
-        if result:
-            word_info = list(result[0])
+        if word_info[2] is None:
+            word_info[2] = 0
+
+        return word_info
     else:
-        return word_info + [0]
-
-    sql = "SELECT Conjugation FROM WORDS WHERE Word = %s;"
-    cursor.execute(sql, word_info[0])
-    result = word_info + list(cursor.fetchall()[0])
-    if result[2] is None:
-        result[2] = 0
-
-    return result
+        word_info.append(0)
+        return word_info
 
 
 '''
@@ -78,12 +126,12 @@ return : 단어 변환이 이루어진 후의 sentence
 '''
 
 
-def conversion(sentenceInfo):
+def conversion(sentenceInfo, eng_pos):
     target = ['NNG', 'VV', 'VA', 'XSV']
     flag = 0
     for idx, symbol in enumerate(sentenceInfo[1]):
         if(symbol[1] in target):
-            conv = dbProcess(symbol)
+            conv = dbProcess(symbol, eng_pos, sentenceInfo[2][0])
             if conv[2] == 1:
                 flag = 1
             sentenceInfo[1][idx] = list(conv)[:-1]
