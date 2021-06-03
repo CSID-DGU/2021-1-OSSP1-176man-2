@@ -90,7 +90,6 @@ def dbProcess(word_info, eng_pos, Hflag):
                     else:
                         word_info.append(0)
                 else:
-                    result = result[0]
                     word_info.append(result[1])
                     return word_info
             else:
