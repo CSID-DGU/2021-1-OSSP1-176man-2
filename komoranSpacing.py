@@ -5,7 +5,7 @@ def Spacing(posList):
 
     pos = []
     space = ['JKS', 'JKC', 'JKG', 'JKO', 'JKB', 'JKV', 'JKQ', 'JC', 'JX', 'EP', 'EF', 'EC',
-             'ETN', 'ETM', 'XSN', 'XSV', 'XSA', 'SF', 'SP', 'VCP', 'VCN']  # 띄어쓰기를 하지 않는 품사들을 저장한 리스트
+             'ETN', 'ETM', 'XSN', 'XSV', 'XSA', 'SF', 'SP', 'VCP']  # 띄어쓰기를 하지 않는 품사들을 저장한 리스트
 
     morph = []
     # 각 낱말을 리스트에 합성하여 문장으로 만들어준다.
