@@ -3,6 +3,8 @@ from konlpy.tag import Komoran
 import hgtk
 import config
 import pymysql
+import vowelReduction
+import copy
 
 FILE_PATH = config.FILE_PATH  # 말뭉치 excel 파일이 위치한 경로
 
@@ -77,7 +79,17 @@ def getIrregular(original_text):
 
     for i in word_list:
         word = komoran.pos(i)
-        komoran_word_list = list(map(list, word))
+        word1 = komoran.morphs(i)
+        word = list(map(list, word))
+        word1 = list(map(list, word1))
+
+        r_word = copy.deepcopy(word)
+
+        w_list = [word1, word]
+        komoran_word_list = vowelReduction.vowelReduction(w_list)
+        komoran_word_list = komoran_word_list[1]
+        print("-----")
+        print(komoran_word_list)
 
         # stem_flag : 어절내에 불규칙이 가능한 용언이 있는지 여부를 파악하기 위한 flag 변수
         stem_flag = False
@@ -87,7 +99,7 @@ def getIrregular(original_text):
             if(komoran_word_list[index][1] in irregular_stem_tag):
                 stem_flag = True
                 stem.append(
-                    (komoran_word_list[index][0], komoran_word_list[index][1]))
+                    (r_word[index][0], r_word[index][1]))
                 break
 
         # 어절에 불규칙 활용이 가능한 품사가 없더라도 어절의 인덱스를 맞추기 위해 배열에 추가
@@ -134,6 +146,10 @@ def getIrregular(original_text):
 
         # perfectString과 입력된 원문 어절을 비교하여 문장의 규칙/불규칙 여부 판별
         if (perfect_string != word_list[index]):
+            print("----")
+            print(perfect_string)
+            print(word_list[index])
+
             indexList.append(index)
 
     for i in indexList:
@@ -195,8 +211,8 @@ return : DB 내에 해당 용언의 유무 (있을 시 TRUE, 없을 시 FALSE)
 
 
 def dbCheck(cursor, word_info):
-    sql = "SELECT * FROM WORDS WHERE Word = %s;"
-    cursor.execute(sql, word_info[0])
+    sql = "SELECT * FROM WORDS WHERE Word = %s AND Class = %s;"
+    cursor.execute(sql, word_info)
     result = cursor.fetchall()
 
     return bool(result)
@@ -219,6 +235,20 @@ def dbProcess(word_info):
         dbUpdate(cursor, conn, word_info)
 
 
+def eliminate(irregular_list):
+    print("삭제할 인덱스를 입력하세요(없다면 -1 입력) : ")
+    index = int(input())
+    while(index != -1):
+        del irregular_list[index]
+        print("========")
+        print(irregular_list)
+        print("========")
+        print("삭제할 인덱스를 입력하세요(없다면 -1 입력) : ")
+        index = int(input())
+
+    return irregular_list
+
+
 '''
 - 불규칙 용언 판별
 - getCorpus()를 통해 말뭉치 파일을 읽어들임
@@ -229,14 +259,29 @@ def dbProcess(word_info):
 
 # getCorpus
 original_corpus_list = getCorpus("test", 'kor')
-print("getCorpus() : ", original_corpus_list)
+#print("getCorpus() : ", original_corpus_list)
 
 irregular_list = set()
+
 # getIrregular
 for i in range(len(original_corpus_list)):
     isIregular = getIrregular(original_corpus_list[i])
-    for i in isIregular:
-        irregular_list.add(i)
+    for j in isIregular:
+        irregular_list.add(j)
+
+        print(i)
+        print(j)
+        print("----")
+
+print("============")
+print(irregular_list)
+print("============")
+irregular_list = list(irregular_list)
+print(irregular_list[1])
+irregular_list = eliminate(irregular_list)
+
+print(irregular_list)
+
 
 for i in irregular_list:
     dbProcess(i)

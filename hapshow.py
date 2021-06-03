@@ -41,12 +41,7 @@ def hapshow(sentenceInfo, sentenceType):
         for i in range(len(sentenceInfo[1])):
             # 종결 어미를 찾은 경우
             if sentenceInfo[1][i][1] in word_class:
-                # 앞 음절이 받침이 있는 경우
-                if hgtk.checker.has_batchim(sentenceInfo[1][i-1][0][len(sentenceInfo[1][i-1][0])-1]):
-                    sentenceInfo[1][i][0] = "으십시오"
-                # 앞 음절이 받침이 없는 경우
-                else:
-                    sentenceInfo[1][i][0] = "십시오"
+                sentenceInfo[1][i][0] = "ㅂ시오"
 
     sentenceInfo[0] = list(map(lambda x: x[0], sentenceInfo[1]))
 
