@@ -1,5 +1,3 @@
-import main
-import hgtkTest
 import hgtk
 
 '''
@@ -23,6 +21,9 @@ import hgtk
 - '시' 또는 '으시' 처리 추가 완료
 - '우' 수정 완료
 
+2021-06-03 (5차 수정)
+- 'ㅂ' 수정 (ex. 아름답ㄴ -> 아름다운)
+
 sentenceInfo : 문체 변환이 완료된 한글 문장
 
 활용되지 않은 어간일 때 활용 처리
@@ -39,6 +40,7 @@ def stemIrregular(sentenceInfo):
 
     # stem_type: 불규칙 활용 처리 시 '어간'의 형태소 종류
     stem_type = ['VV', 'VA', 'XR']
+    ending_type = ['EP', 'EF', 'EC', 'ETM']
 
     ''' 문장을 구성하는 모든 형태소를 차례로 체크 '''
     for idx in range(len(sentenceInfo[1])):
@@ -65,10 +67,20 @@ def stemIrregular(sentenceInfo):
                     ending[1] = 'ㅝ'
                     sentenceInfo[1][idx][0] = hgtk.text.compose(stem)
                     sentenceInfo[1][idx+1][0] =  hgtk.text.compose(ending)
-                if ending[0] == 'ㅇ' and ending[1] == 'ㅡ' and ending[3] == 'ㅅ' and ending[4] == 'ㅣ':
+                elif ending[0] == 'ㅇ' and ending[1] == 'ㅡ' and ending[3] == 'ㅅ' and ending[4] == 'ㅣ':
                     stem = stem[:-2]
                     stem.append('ᴥ')
                     ending[1] = 'ㅜ'
+                    sentenceInfo[1][idx][0] = hgtk.text.compose(stem)
+                    sentenceInfo[1][idx+1][0] = hgtk.text.compose(ending)
+                elif sentenceInfo[1][idx+1][1] in ending_type and ending[0] == 'ㄴ':
+                    stem = stem[:-2]
+                    stem.append('ᴥ')
+                    ending.clear()
+                    ending.append('ㅇ')
+                    ending.append('ㅜ')
+                    ending.append('ㄴ')
+                    ending.append('ᴥ')
                     sentenceInfo[1][idx][0] = hgtk.text.compose(stem)
                     sentenceInfo[1][idx+1][0] = hgtk.text.compose(ending)
 
