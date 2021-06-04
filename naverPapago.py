@@ -5,6 +5,7 @@ import os
 import urllib.request
 import config
 from konlpy.tag import Komoran
+import getEngOrigin
 
 client_id = config.API_ID  # 개발자센터에서 발급받은 Client ID 값
 client_secret = config.API_SECRET  # 개발자센터에서 발급받은 Client Secret 값
@@ -31,7 +32,8 @@ def translate(inputSentence):
 
     komoran = Komoran()
 
-    return [komoran.morphs(korText), komoran.pos(korText)]
+    eng_pos = getEngOrigin.get_eng_origin(inputSentence)
+    return [komoran.morphs(korText), komoran.pos(korText)], eng_pos
 
 def translate_en2ko(inputSentence):
     encText = urllib.parse.quote(inputSentence)
@@ -52,7 +54,6 @@ def translate_en2ko(inputSentence):
     jsonObject = json.loads(response_body.decode('utf-8'))
     korText = jsonObject.get("message").get("result").get("translatedText")
     return korText
-
 
 if __name__ == '__main__':
     str1 = input()
