@@ -14,7 +14,8 @@ def haeyo(sentenceInfo, sentenceType):
         # 종결어미를 찾는다.
         if sentenceInfo[1][i][1] == 'EF' :
             # '하' 불규칙 처리를 위해 따로 빼놓음
-            if sentenceInfo[1][i - 1][0] == '하':
+            flag_ha = sentenceInfo[1][i - 1][0]
+            if flag_ha[-1] == '하':
                 sentenceInfo[1][i][0] = '아요'
             # 전 형태소의 품사가 용언일 때
             elif sentenceInfo[1][i - 1][1] in vb:
