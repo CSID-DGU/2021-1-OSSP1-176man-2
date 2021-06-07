@@ -3,7 +3,6 @@ import komoranSpacing
 import hgtkTest
 import engInputAnalysis
 import sentenceStyle
-import copy
 import irregular
 import honorification
 import conversion
@@ -55,17 +54,9 @@ def main(inputSentence, inputSentenceStyle, subjectHonorification):
     elif inputSentenceStyle == 3:
         sentenceInfo = sentenceStyle.habsyo(sentenceInfo, sentenceType)
 
-    sentenceInfo = irregular.irregular(sentenceInfo)
+    if sentenceInfo[2][0] == 1:
+        sentenceInfo = irregular.irregular(sentenceInfo)
     sentenceInfo = honorification.honorification2(sentenceInfo)
-
-    if inputSentenceStyle == 0:
-        sentenceInfo = sentenceStyle.hae(sentenceInfo, sentenceType)
-    elif inputSentenceStyle == 1:
-        sentenceInfo = sentenceStyle.haera(sentenceInfo, sentenceType)
-    elif inputSentenceStyle == 2:
-        sentenceInfo = sentenceStyle.haeyo(sentenceInfo, sentenceType)
-    elif inputSentenceStyle == 3:
-        sentenceInfo = sentenceStyle.habsyo(sentenceInfo, sentenceType)
 
     sentenceInfo = josa.josa(sentenceInfo)
     sentenceInfo = vowelReduction.vowelReduction(sentenceInfo)
