@@ -1,7 +1,7 @@
 import hgtk
 
-pos_vowel = ['ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ']
-neg_vowel = ['ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅣ', 'ㅢ']
+pos_vowel = ['ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅛ']
+neg_vowel = ['ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅚ', 'ㅙ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅣ', 'ㅢ']
 consonant = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']
 noun = ['NNG', 'NNP', 'NNB', 'NR', 'NP', 'XSN'] 
 vb = ['VV', 'VA', 'XSV', 'XSA', 'VX', 'EP']
@@ -23,6 +23,8 @@ def hae(sentenceInfo, sentenceType):
                     continue
                 tmp = sentenceInfo[1][i - 1][0]
                 verb = hgtk.letter.decompose(tmp[-1])
+                if tmp[-1] == '르':
+                    verb = hgtk.letter.decompose(tmp[-2])
                 # 전 형태소의 받침이 있을 때
                 if verb[-1] in consonant:
                     # 전 형태소의 모음이 양성일 때
@@ -155,6 +157,8 @@ def haeyo(sentenceInfo, sentenceType):
             elif sentenceInfo[1][i - 1][1] in vb:
                 tmp = sentenceInfo[1][i - 1][0]
                 verb = hgtk.letter.decompose(tmp[-1])
+                if tmp[-1] == '르':
+                    verb = hgtk.letter.decompose(tmp[-2])
                 # 전 형태소의 받침이 있을 때
                 if hgtk.checker.has_batchim(tmp[-1]):
                     # 전 형태소의 모음이 양성일 때
@@ -180,7 +184,7 @@ def haeyo(sentenceInfo, sentenceType):
                 tmp = sentenceInfo[1][i - 1][0]
                 verb = hgtk.letter.decompose(tmp[-1])
                 # 전 형태소의 받침이 있을 때
-                if hgtk.checker.has_batchim(verb[-1]):
+                if hgtk.checker.has_batchim(tmp[-1]):
                     sentenceInfo[1][i][0] = '이에요'
                 # 전 형태소의 받침이 없을 때
                 else:
