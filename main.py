@@ -19,7 +19,6 @@ return outputSentence 사용자가 선택한 옵션에 해당하는 작업을 �
 
 
 def main(inputSentence, inputSentenceStyle, subjectHonorification):
-    outputSentence = []
     inputSentenceStyle, subjectHonorification = int(
         inputSentenceStyle), int(subjectHonorification)
 
@@ -37,57 +36,47 @@ def main(inputSentence, inputSentenceStyle, subjectHonorification):
 
     sentenceInfo, eng_pos = naverPapago.translate(
         inputSentence)  # 파파고API로 번역 및 Komoran으로 형태소 분석
-    tmp = komoranSpacing.Spacing(sentenceInfo[1])  # 분석된 형태소를 이용하여 띄어쓰기 처리
-    tmp.append([subjectHonorification, 0])  # 주체 높임법 플래그, 불규칙 활용 여부 플래그 리스트에 추가
+    sentenceInfo = komoranSpacing.Spacing(
+        sentenceInfo[1])  # 분석된 형태소를 이용하여 띄어쓰기 처리
+    # 주체 높임법 플래그, 불규칙 활용 여부 플래그 리스트에 추가
+    sentenceInfo.append([subjectHonorification, 0])
 
     print(eng_pos)
-    print(tmp)
-    conversion.conversion(tmp, eng_pos)
+    print(sentenceInfo)
+    conversion.conversion(sentenceInfo, eng_pos)
 
-    tmp = honorification.honorification1(tmp)  # 주체 높임에 따른 '시' 추가 및 삭제
-    sentenceInfoList = []
-    for i in range(4):
-        a = copy.deepcopy(tmp)
-        sentenceInfoList.append(a)
+    sentenceInfo = honorification.honorification1(
+        sentenceInfo)  # 주체 높임에 따른 '시' 추가 및 삭제
 
-    print(tmp)
+    print(sentenceInfo)
+    if inputSentenceStyle == 0:
+        sentenceInfo = sentenceStyle.hae(sentenceInfo, sentenceType)
+    elif inputSentenceStyle == 1:
+        sentenceInfo = sentenceStyle.haera(sentenceInfo, sentenceType)
+    elif inputSentenceStyle == 2:
+        sentenceInfo = sentenceStyle.haeyo(sentenceInfo, sentenceType)
+    elif inputSentenceStyle == 3:
+        sentenceInfo = sentenceStyle.habsyo(sentenceInfo, sentenceType)
 
-    # 각 문체에 맞는 함수 실행후 어미 변경, 불규칙 처리 확인
-    # 해
-    sentenceHae = sentenceStyle.hae(sentenceInfoList[0], sentenceType)
-    sentenceHae = irregular.irregular(sentenceHae)
-    sentenceHae = honorification.honorification2(sentenceHae)
-    sentenceHae = irregular.irregular(sentenceHae)
-    sentenceHae = josa.josa(sentenceHae)
-    sentenceHae = vowelReduction.vowelReduction(sentenceHae)
-    outputSentence.append(hgtkTest.textCompose(sentenceHae[0]))
-    # 해라
-    sentenceHaera = sentenceStyle.haera(sentenceInfoList[1], sentenceType)
-    sentenceHaera = irregular.irregular(sentenceHaera)
-    sentenceHaera = honorification.honorification2(sentenceHaera)
-    sentenceHaera = irregular.irregular(sentenceHaera)
-    sentenceHaera = josa.josa(sentenceHaera)
-    sentenceHaera = vowelReduction.vowelReduction(sentenceHaera)
-    outputSentence.append(hgtkTest.textCompose(sentenceHaera[0]))
-    # 해요
-    sentenceHaeyo = sentenceStyle.haeyo(sentenceInfoList[2], sentenceType)
-    sentenceHaeyo = irregular.irregular(sentenceHaeyo)
-    sentenceHaeyo = honorification.honorification2(sentenceHaeyo)
-    sentenceHaeyo = irregular.irregular(sentenceHaeyo)
-    sentenceHaeyo = josa.josa(sentenceHaeyo)
-    sentenceHaeyo = vowelReduction.vowelReduction(sentenceHaeyo)
-    outputSentence.append(hgtkTest.textCompose(sentenceHaeyo[0]))
-    # 합쇼
-    sentenceHabsyo = sentenceStyle.habsyo(sentenceInfoList[3], sentenceType)
-    sentenceHabsyo = irregular.irregular(sentenceHabsyo)
-    sentenceHabsyo = honorification.honorification2(sentenceHabsyo)
-    sentenceHabsyo = irregular.irregular(sentenceHabsyo)
-    sentenceHabsyo = josa.josa(sentenceHabsyo)
-    sentenceHabsyo = vowelReduction.vowelReduction(sentenceHabsyo)
-    outputSentence.append(hgtkTest.textCompose(sentenceHabsyo[0]))
+    sentenceInfo = sentenceStyle.hae(sentenceInfo, sentenceType)
+    sentenceInfo = irregular.irregular(sentenceInfo)
+    sentenceInfo = honorification.honorification2(sentenceInfo)
+
+    if inputSentenceStyle == 0:
+        sentenceInfo = sentenceStyle.hae(sentenceInfo, sentenceType)
+    elif inputSentenceStyle == 1:
+        sentenceInfo = sentenceStyle.haera(sentenceInfo, sentenceType)
+    elif inputSentenceStyle == 2:
+        sentenceInfo = sentenceStyle.haeyo(sentenceInfo, sentenceType)
+    elif inputSentenceStyle == 3:
+        sentenceInfo = sentenceStyle.habsyo(sentenceInfo, sentenceType)
+
+    sentenceInfo = josa.josa(sentenceInfo)
+    sentenceInfo = vowelReduction.vowelReduction(sentenceInfo)
+    outputSentence = hgtkTest.textCompose(sentenceInfo[0])
 
     print(outputSentence)
-    return outputSentence[inputSentenceStyle]
+    return outputSentence
 
 
 # # 사용자가 영어문장과 문체, 주어 높임을 선택해서 입력
