@@ -47,13 +47,14 @@ def stemIrregular(sentenceInfo):
                     ending[1] = 'ㅜ'
                     sentenceInfo[1][idx][0] = hgtk.text.compose(stem)
                     sentenceInfo[1][idx+1][0] = hgtk.text.compose(ending)
-                elif sentenceInfo[1][idx+1][1] in ending_type and ending[0] == 'ㄴ':
+                elif sentenceInfo[1][idx+1][1] in ending_type and (ending[0] == 'ㄴ' or ending[0] == 'ㄹ'):
                     stem = stem[:-2]
                     stem.append('ᴥ')
+                    tmp = ending[0]
                     ending.clear()
                     ending.append('ㅇ')
                     ending.append('ㅜ')
-                    ending.append('ㄴ')
+                    ending.append(tmp)
                     ending.append('ᴥ')
                     sentenceInfo[1][idx][0] = hgtk.text.compose(stem)
                     sentenceInfo[1][idx+1][0] = hgtk.text.compose(ending)
