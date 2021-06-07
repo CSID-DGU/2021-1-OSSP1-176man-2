@@ -21,7 +21,7 @@ def josa(sentenceInfo):
         # 앞 token이 공백이 아닌 경우
         if sentenceInfo[1][i-1][0] != " " and sentenceInfo[1][i][1] in check:
 
-            vowelCheck = hgtk.letter.decompose(sentenceInfo[1][i-1][0][-1])[1]
+            vowelCheck = hgtk.letter.decompose(sentenceInfo[1][i-1][0][-1])
 
             # '은', '는' 처리
             if(sentenceInfo[1][i][0] == "은" or sentenceInfo[1][i][0] == "는"):
@@ -69,7 +69,7 @@ def josa(sentenceInfo):
             # '아', '어' 처리
             elif(sentenceInfo[1][i][0] == "아" or sentenceInfo[1][i][0] == "어"):
                 # 앞 음절의 모음이 양성인 경우
-                if vowelCheck in pos_vowel:
+                if vowelCheck[1] in pos_vowel and vowelCheck[2] != "ㅆ":
                     sentenceInfo[1][i][0] = "아"
                 # 앞 음절의 모음이 음성인 경우
                 else:
@@ -77,7 +77,7 @@ def josa(sentenceInfo):
             # '았', '었' 처리
             elif(sentenceInfo[1][i][0] == "았" or sentenceInfo[1][i][0] == "었"):
                 # 앞 음절의 모음이 양성인 경우
-                if vowelCheck in pos_vowel:
+                if vowelCheck[1] in pos_vowel and vowelCheck[2] != "ㅆ":
                     sentenceInfo[1][i][0] = "았"
                 # 앞 음절의 모음이 음성인 경우
                 else:
@@ -85,7 +85,7 @@ def josa(sentenceInfo):
             # '아요', '어요' 처리
             elif(sentenceInfo[1][i][0] == "아요" or sentenceInfo[1][i][0] == "어요"):
                 # 앞 음절의 모음이 양성인 경우
-                if vowelCheck in pos_vowel:
+                if vowelCheck[1] in pos_vowel and vowelCheck[2] != "ㅆ":
                     sentenceInfo[1][i][0] = "아요"
                 # 앞 음절의 모음이 음성인 경우
                 else:
