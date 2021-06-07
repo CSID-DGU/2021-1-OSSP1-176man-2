@@ -146,11 +146,9 @@ def stemEndingIrregular(sentenceInfo):
             break
         if len(sentenceInfo[1][i+1][0]) == 0:
             continue
-        if sentenceInfo[1][i][0][-2:] == 'ㄹᴥ' and sentenceInfo[1][i+1][0][0] in ['ㄴ', 'ㄹ', 'ㅂ'] and sentenceInfo[1][i+1][1] in ending:
+        if sentenceInfo[1][i][0][-2:] == 'ㄹᴥ' and sentenceInfo[1][i+1][0][0] in ['ㄴ', 'ㅅ', 'ㅂ'] and sentenceInfo[1][i+1][1] in ending:
             sentenceInfo[1][i][0] = sentenceInfo[1][i][0][:-2] + "ᴥ"
-        if sentenceInfo[1][i][0][-2:] == 'ㄹᴥ' and sentenceInfo[1][i+1][0][0:2] in ['ㅇㅗ', 'ㅅㅣ'] and sentenceInfo[1][i+1][1] in ending:
-            sentenceInfo[1][i][0] = sentenceInfo[1][i][0][:-2] + "ᴥ"
-
+       
     for i in range(len(sentenceInfo[1])):
         sentenceInfo[1][i][0] = hgtk.text.compose(sentenceInfo[1][i][0])
 
