@@ -10,8 +10,10 @@ def Spacing(posList):
     morph = []
     # 각 낱말을 리스트에 합성하여 문장으로 만들어준다.
     for i in range(len(posList)):
+        if posList[i][0] == '걸' and posList[i+1][0] == 'ㄹ':
+            del(posList[i+1])
         morph.append(posList[i][0])
-        pos.append(list(posList[i])) # pos를 변경하기 쉽게 tuple에서 list형으로 바꾸어 저장해준다.
+        pos.append(list(posList[i]))  # pos를 변경하기 쉽게 tuple에서 list형으로 바꾸어 저장해준다.
 
         if (i == len(posList) - 1):
             break

@@ -11,7 +11,7 @@ consonant = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ',
              'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']
 noun = ['NNG', 'NNP', 'NNB', 'NR', 'NP', 'XSN']
 vb = ['VV', 'VA', 'XSV', 'XSA', 'VX', 'EP']
-check = ['EC', 'EP', 'JKS', 'JKC', 'JKG',
+check = ['EC', 'EP', 'EF', 'JKS', 'JKC', 'JKG',
          'JKO', 'JKB', 'JKV', 'JKQ', 'JC', 'JX']
 
 
@@ -21,12 +21,7 @@ def josa(sentenceInfo):
         # 앞 token이 공백이 아닌 경우
         if sentenceInfo[1][i-1][0] != " " and sentenceInfo[1][i][1] in check:
 
-            if(hgtk.checker.has_batchim(sentenceInfo[1][i-1][0][-1])):
-                vowelCheck = hgtk.letter.decompose(
-                    sentenceInfo[1][i-1][0][-1])[-3]
-            else:
-                vowelCheck = hgtk.letter.decompose(
-                    sentenceInfo[1][i-1][0][-1])[-2]
+            vowelCheck = hgtk.letter.decompose(sentenceInfo[1][i-1][0][-1])[1]
 
             # '은', '는' 처리
             if(sentenceInfo[1][i][0] == "은" or sentenceInfo[1][i][0] == "는"):
