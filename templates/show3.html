@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>翻译测试</title>
-   
+
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="external nofollow" target="_blank">
     <style type="text/css">
     .form-control:focus, .btn:focus,.custom-select:focus{
@@ -48,14 +48,14 @@
                         <form method="post" action=".">
                             <!-- Django 에서 POST 데이터 가 필요 한 곳 은 csrftoken -->
                             <div class="form-group">
-                                <textarea type="text" class="border-0 form-control " id="body" name="body" rows="12" placeholder="에서 POST 데이터 가 필요 한 곳 은"></textarea>
+                                <textarea type="text" class="border-0 form-control " id="body" name="body" rows="12" placeholder="에서 POST 데이터 가 필요 한 곳 은">{{origin}}</textarea>
                             </div>
                             <button type="submit" class="btn btn-primary position-absolute rounded-0 green" style=" height: 60px;bottom: -60px; right:-1px; line-height: 45px; z-index: 2">번역 하 다.</button>
                         </form>
                     </div>
                     <div class="border-light card-footer bg-transparent pl-0 pt-0 pb-0 d-flex justify-content-between align-items-center" style="height: 60px; padding-right: 105px">
                         <!-- <div class="d-flex align-items-center"> -->
-                        
+
                         		<select class="border-right border-light custom-select border-top-0 border-bottom-0 border-left-0 h-100 " id="inputGroupSelect04" aria-label="Example select with button addon" style="width: 100px">
 							    <option value="해체">해체</option>
 							    <option value="해라체">해라체</option>
@@ -71,8 +71,8 @@
                         <!-- </div> -->
                         <button type="button" class="btn bg-transparent border-0">다음은</button>
                         	</div>
-                            
-							
+
+
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                         <form method="post" action=".">
                             <!-- Django 에서 POST 데이터 가 필요 한 곳 은 csrftoken -->
                             <div class="form-group">
-                                <textarea type="text" class="border-0 form-control" id="body" name="body" rows="12" placeholder="에서 POST 데이터 가 필요 한 곳 은"></textarea>
+                                <textarea type="text" class="border-0 form-control" id="body" name="body" rows="12" placeholder="에서 POST 데이터 가 필요 한 곳 은"> {{name}}</textarea>
                             </div>
                             <button type="submit" class="btn btn-primary position-absolute rounded-0 green" style=" height: 60px;bottom: -60px; right:-1px; line-height: 45px;z-index: 2">번역 하 다.</button>
                         </form>

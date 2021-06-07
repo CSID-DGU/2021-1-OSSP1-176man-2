@@ -1,5 +1,5 @@
 from flask import Flask, render_template, get_flashed_messages, request, jsonify
-from naverPapago import translate
+from naverPapago import translate, translate_en2ko
 
 app = Flask(__name__)
 
