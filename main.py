@@ -41,14 +41,11 @@ def main(inputSentence, inputSentenceStyle, subjectHonorification):
     # 주체 높임법 플래그, 불규칙 활용 여부 플래그 리스트에 추가
     sentenceInfo.append([subjectHonorification, 0])
 
-    print(eng_pos)
-    print(sentenceInfo)
     conversion.conversion(sentenceInfo, eng_pos)
 
     sentenceInfo = honorification.honorification1(
         sentenceInfo)  # 주체 높임에 따른 '시' 추가 및 삭제
 
-    print(sentenceInfo)
     if inputSentenceStyle == 0:
         sentenceInfo = sentenceStyle.hae(sentenceInfo, sentenceType)
     elif inputSentenceStyle == 1:
@@ -58,7 +55,6 @@ def main(inputSentence, inputSentenceStyle, subjectHonorification):
     elif inputSentenceStyle == 3:
         sentenceInfo = sentenceStyle.habsyo(sentenceInfo, sentenceType)
 
-    sentenceInfo = sentenceStyle.hae(sentenceInfo, sentenceType)
     sentenceInfo = irregular.irregular(sentenceInfo)
     sentenceInfo = honorification.honorification2(sentenceInfo)
 
