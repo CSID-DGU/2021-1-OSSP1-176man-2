@@ -119,6 +119,10 @@ def vowelReduction(sentenceInfo):
             sentenceInfo[1][i][0] = sentenceInfo[1][i][0][0:-1] + 'ㅆᴥ'
             sentenceInfo[1][i+1][0] = ''
 
+        # 가아 -> 가
+        if sentenceInfo[1][i][0][-2:] == 'ㅏᴥ' and sentenceInfo[1][i+1][0] == 'ㅇㅏᴥ':
+            sentenceInfo[1][i+1][0] = ''
+
         for i in range(len(sentenceInfo[0])):
             if len(sentenceInfo[1][i][0]) == 0:
                 sentenceInfo[1][i][1] = ''
