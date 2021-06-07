@@ -91,13 +91,12 @@ def stemIrregular(sentenceInfo):
 def endingIrregular(sentenceInfo):
 
     for i in range(len(sentenceInfo)-1):
-        if(sentenceInfo[i][len(sentenceInfo[i])-1] == '하' and sentenceInfo[i+1][0] == '아'):
-            sentenceInfo[i+1] = '여' + sentenceInfo[i+1][1:]
-        elif(sentenceInfo[i][len(sentenceInfo[i])-2:] == '푸르' and sentenceInfo[i+1][0] == '어'):
-            sentenceInfo[i+1] = '러' + sentenceInfo[i+1][1:]
+        if(sentenceInfo[i][0][-1] == '하' and sentenceInfo[i+1][0] == '아'):
+            sentenceInfo[i][0] = sentenceInfo[i][0][:-1] + '해'
+            sentenceInfo[i+1][0] = ['', '']
+        elif(sentenceInfo[i][0][len(sentenceInfo[i])-2:] == '푸르' and sentenceInfo[i+1][0] == '어'):
+            sentenceInfo[i+1][0] = '러' + sentenceInfo[i+1][0][1:]
         # 동음이의어 처리 추가 필요
-        elif(sentenceInfo[i][len(sentenceInfo[i])-2:] == '이르' and sentenceInfo[i+1][0] == '어'):
-            sentenceInfo[i+1] = '러' + sentenceInfo[i+1][1:]
 
     return sentenceInfo
 
