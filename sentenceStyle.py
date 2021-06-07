@@ -1,20 +1,24 @@
 import hgtk
 
 pos_vowel = ['ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅛ']
-neg_vowel = ['ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅚ', 'ㅙ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅣ', 'ㅢ']
-consonant = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']
-noun = ['NNG', 'NNP', 'NNB', 'NR', 'NP', 'XSN'] 
+neg_vowel = ['ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅚ', 'ㅙ',
+             'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅣ', 'ㅢ']
+consonant = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ',
+             'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']
+noun = ['NNG', 'NNP', 'NNB', 'NR', 'NP', 'XSN']
 vb = ['VV', 'VA', 'XSV', 'XSA', 'VX', 'EP']
 
 '''
 2021-06-07 어미변환 함수 4개 merge
 '''
 
-#어미 '해'체 변환 함수
+# 어미 '해'체 변환 함수
+
+
 def hae(sentenceInfo, sentenceType):
-    for i in range(len(sentenceInfo[1])):         
+    for i in range(len(sentenceInfo[1])):
         # 종결어미를 찾는다.
-        if sentenceInfo[1][i][1] == 'EF' :
+        if sentenceInfo[1][i][1] == 'EF':
             # 전 형태소의 품사가 용언일 때
             if sentenceInfo[1][i - 1][1] in vb:
                 # '하' 불규칙 처리를 위해 따로 빼놓음
@@ -40,7 +44,7 @@ def hae(sentenceInfo, sentenceType):
                     sentenceInfo[1][i][0] = '어'
                 # 전 형태소의 받침이 없고 'ㅏ'로 끝날 때 ex)집에 가 에서 '가'
                 elif verb[-2] == 'ㅏ':
-                    sentenceInfo[1][i][0] = '아' 
+                    sentenceInfo[1][i][0] = '아'
                 # 전 형태소의 받침이 없고 모음이 양성일 때
                 elif verb[-2] in pos_vowel:
                     sentenceInfo[1][i][0] = '아'
@@ -60,11 +64,13 @@ def hae(sentenceInfo, sentenceType):
                 # 전 형태소의 받침이 없을 때
                 else:
                     sentenceInfo[1][i][0] = '야'
-        
-    sentenceInfo[0] = list(map(lambda x: x[0], sentenceInfo[1]))
-    return sentenceInfo # morph, pos 리스트형으로 반환
 
-#어미 '해라'체 변환 함수
+    sentenceInfo[0] = list(map(lambda x: x[0], sentenceInfo[1]))
+    return sentenceInfo  # morph, pos 리스트형으로 반환
+
+# 어미 '해라'체 변환 함수
+
+
 def haera(sentenceInfo, sentenceType):
     # print(sentenceInfo)  # 종결어미 처리 전
     # print(sentenceType)  # 문장 종류
@@ -81,14 +87,14 @@ def haera(sentenceInfo, sentenceType):
             else:
                 isHangul = False
 
-            if isHangul and isBatchim and sentenceInfo[1][i][1] in ['VV', 'XSV', 'VX'] and sentenceInfo[1][i+1][1] == 'EF':
+            if isHangul and isBatchim and sentenceInfo[1][i][1] in ['VV', 'XSV'] and sentenceInfo[1][i+1][1] == 'EF':
                 sentenceInfo[1][i+1] = ['는다', 'EF']
             if isHangul and not isBatchim and sentenceInfo[1][i][1] in ['VV', 'XSV', 'VX'] and sentenceInfo[1][i+1][1] == 'EF':
                 sentenceInfo[1][i+1] = ['ㄴ다', 'EF']
 
         # 다 : 종결어미 앞이 서술격 조사일 경우
         for i in range(len(sentenceInfo[1])):
-            if sentenceInfo[1][i][1] in ['VCP', 'VCN', 'NNB', 'EP'] and sentenceInfo[1][i+1][1] == 'EF':
+            if sentenceInfo[1][i][1] in ['VCP', 'VCN', 'NNB', 'EP', 'VX'] and sentenceInfo[1][i+1][1] == 'EF':
                 sentenceInfo[1][i+1] = ['다', 'EF']
 
         # 종결어미 앞이 형용사인 경우, '군' → '다'로 수정
@@ -145,13 +151,15 @@ def haera(sentenceInfo, sentenceType):
 
     sentenceInfo[0] = list(map(lambda x: x[0], sentenceInfo[1]))
     # print(CompleteString)  # morphs → string : string으로 문장 출력
-    return sentenceInfo   
+    return sentenceInfo
 
-#어미 '해요'체 변환 함수
+# 어미 '해요'체 변환 함수
+
+
 def haeyo(sentenceInfo, sentenceType):
     for i in range(len(sentenceInfo[1])):
         # 종결어미를 찾는다.
-        if sentenceInfo[1][i][1] == 'EF' :
+        if sentenceInfo[1][i][1] == 'EF':
             # '하' 불규칙 처리를 위해 따로 빼놓음
             flag_ha = sentenceInfo[1][i - 1][0]
             if flag_ha[-1] == '하':
@@ -196,7 +204,7 @@ def haeyo(sentenceInfo, sentenceType):
                     # 전 형태소의 모음이 양성일 때
                     if verb[-2] in pos_vowel:
                         sentenceInfo[1][i][0] = '아요'
-                    # 전 형태소의 모음이 음성일 때    
+                    # 전 형태소의 모음이 음성일 때
                     elif verb[-2] in neg_vowel:
                         sentenceInfo[1][i][0] = '어요'
                 # 전 형태소의 받침이 없고 'ㅏ'나 'ㅓ'로 끝날 때
@@ -208,11 +216,13 @@ def haeyo(sentenceInfo, sentenceType):
                 # 전 형태소의 받침이 없고 모음이 양성일 때
                 elif verb[-2] in neg_vowel:
                     sentenceInfo[1][i][0] = '어요'
-    
-    sentenceInfo[0] = list(map(lambda x: x[0], sentenceInfo[1]))
-    return sentenceInfo # morph, pos 리스트형으로 반환
 
-#어미 '합쇼'체 변환 함수
+    sentenceInfo[0] = list(map(lambda x: x[0], sentenceInfo[1]))
+    return sentenceInfo  # morph, pos 리스트형으로 반환
+
+# 어미 '합쇼'체 변환 함수
+
+
 def habsyo(sentenceInfo, sentenceType):
     # word_class : 어미 변경시 변경되어야 할 품사(종결어미)를 저장한 배열
     word_class = ["EF"]

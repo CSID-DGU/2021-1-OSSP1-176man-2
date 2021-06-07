@@ -41,7 +41,7 @@ def main(inputSentence, inputSentenceStyle, subjectHonorification):
     print(tmp)
     conversion.conversion(tmp, eng_pos)
 
-    tmp = honorification.honorification(tmp)  # 주체 높임에 따른 '시' 추가 및 삭제
+    tmp = honorification.honorification1(tmp)  # 주체 높임에 따른 '시' 추가 및 삭제
     sentenceInfoList = []
     for i in range(4):
         a = copy.deepcopy(tmp)
@@ -50,20 +50,28 @@ def main(inputSentence, inputSentenceStyle, subjectHonorification):
     print(tmp)
 
     # 각 문체에 맞는 함수 실행후 어미 변경, 불규칙 처리 확인
+    # 해
     sentenceHae = sentenceStyle.hae(sentenceInfoList[0], sentenceType)
     sentenceHae = irregular.irregular(sentenceHae)
+    sentenceHae = honorification.honorification2(sentenceHae)
     sentenceHae = vowelReduction.vowelReduction(sentenceHae)
     outputSentence.append(hgtkTest.textCompose(sentenceHae[0]))
+    # 해라
     sentenceHaera = sentenceStyle.haera(sentenceInfoList[1], sentenceType)
     sentenceHaera = irregular.irregular(sentenceHaera)
+    sentenceHaera = honorification.honorification2(sentenceHaera)
     sentenceHaera = vowelReduction.vowelReduction(sentenceHaera)
     outputSentence.append(hgtkTest.textCompose(sentenceHaera[0]))
+    # 해요
     sentenceHaeyo = sentenceStyle.haeyo(sentenceInfoList[2], sentenceType)
     sentenceHaeyo = irregular.irregular(sentenceHaeyo)
+    sentenceHaeyo = honorification.honorification2(sentenceHaeyo)
     sentenceHaeyo = vowelReduction.vowelReduction(sentenceHaeyo)
     outputSentence.append(hgtkTest.textCompose(sentenceHaeyo[0]))
+    # 합쇼
     sentenceHabsyo = sentenceStyle.habsyo(sentenceInfoList[3], sentenceType)
     sentenceHabsyo = irregular.irregular(sentenceHabsyo)
+    sentenceHabsyo = honorification.honorification2(sentenceHabsyo)
     sentenceHabsyo = vowelReduction.vowelReduction(sentenceHabsyo)
     outputSentence.append(hgtkTest.textCompose(sentenceHabsyo[0]))
 
