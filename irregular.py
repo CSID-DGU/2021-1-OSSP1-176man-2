@@ -71,7 +71,7 @@ def stemIrregular(sentenceInfo):
 
             ''' 'ㄹ' 불규칙 활용: 어간이 '_르(+ㄴ)'이 'ㄹ'로 줄고 어미가 '아/어 에서 '라/러'로 바뀐다. '''
             if len(stem) > 3:
-                if stem[3] == 'ㄹ' and stem[4] == 'ㅡ' and (ending[1] == 'ㅏ' or ending[1] == 'ㅓ'):
+                if stem[-3] == 'ㄹ' and stem[-2] == 'ㅡ' and (ending[1] == 'ㅏ' or ending[1] == 'ㅓ'):
                     stem = stem[:-4]
                     stem.append('ㄹ')
                     stem.append('ᴥ')
