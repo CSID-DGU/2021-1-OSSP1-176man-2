@@ -69,7 +69,7 @@ def main(inputSentence, inputSentenceStyle, subjectHonorification):
     outputSentence.append(hgtkTest.textCompose(sentenceHabsyo[0]))
 
     print(outputSentence)
-    return outputSentence[inputSentenceStyle]
+    return outputSentence
 
 
 # 사용자가 영어문장과 문체, 주어 높임을 선택해서 입력
