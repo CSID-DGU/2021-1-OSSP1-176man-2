@@ -19,7 +19,7 @@ def textCompose(korList):
 
     # 문자열에서 자음이 몇번째 있는지를 cntList에 넣는다. ex) 공부하면하ㄹ수록 -> cnt = 5
     for text in korTextString:
-        if text in [" ", ',', '\'', '\"'] or (ord('a') <= ord(text.lower()) <= ord('z')):
+        if text in [" ", ',', '\'', '\"', '%', ':', ';', '(', ')'] or (ord('a') <= ord(text.lower()) <= ord('z') or text.isdigit()):
             continue
         elif ord(text) <= ord('ㅎ') and text not in punctuation:
             cntList.append(cnt)

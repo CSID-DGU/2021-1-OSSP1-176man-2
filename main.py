@@ -38,9 +38,8 @@ def main(inputSentence, inputSentenceStyle, subjectHonorification):
     tmp.append([subjectHonorification, 0])  # 주체 높임법 플래그, 불규칙 활용 여부 플래그 리스트에 추가
 
     print(eng_pos)
-    conversion.conversion(tmp, eng_pos)
-
     print(tmp)
+    conversion.conversion(tmp, eng_pos)
 
     tmp = honorification.honorification(tmp)  # 주체 높임에 따른 '시' 추가 및 삭제
     sentenceInfoList = []

@@ -16,24 +16,16 @@ def honorification(sentenceInfo):
                 flag = 1
                 if sentenceInfo[1][i + 1][0] == '시' and (sentenceInfo[1][i][1] == 'EC' or sentenceInfo[1][i][1] == 'EP'):
                     del(sentenceInfo[1][i + 1])
-            elif sentenceInfo[1][i][0] == '시' and (sentenceInfo[1][i][1] == 'EC' or sentenceInfo[1][i][1] == 'EP'):
-                flag = 1
-            elif (sentenceInfo[1][i][1] == 'EC' or sentenceInfo[1][i][1] == 'EF') and flag == 0:
+            elif (sentenceInfo[1][i][1] == 'EF') and flag == 0:
                 for j in range(i - 1, 0, -1):
                     if sentenceInfo[1][j][1] in stem_type:
                         stem = sentenceInfo[1][j][0]
                         if (stem == '위하' or stem == '대하') and sentenceInfo[1][i][1] == 'EC':
                             break
-                        if hgtk.checker.has_batchim(stem[-1]):
-                            sentenceInfo[1].insert(j + 1, ['으시', 'EP'])
-                            i += 1
-                            flag = 0
-                            break
-                        else:
-                            sentenceInfo[1].insert(j + 1, ['시', 'EP'])
-                            i += 1
-                            flag = 0
-                            break
+                        sentenceInfo[1].insert(j + 1, ['시', 'EP'])
+                        i += 1
+                        flag = 0
+                        break
             i += 1
 
     elif sentenceInfo[2][0] == 0:

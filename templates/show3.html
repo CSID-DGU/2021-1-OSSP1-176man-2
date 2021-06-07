@@ -4,8 +4,9 @@
 <head>
     <meta charset="utf-8">
     <title>翻译测试</title>
-   
+
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="external nofollow" target="_blank">
+    <link rel="stylesheet" href="https://www.layuicdn.com/layui/css/layui.css" rel="external nofollow" target="_blank">
     <style type="text/css">
     .form-control:focus, .btn:focus,.custom-select:focus{
         box-shadow: none;
@@ -48,31 +49,33 @@
                         <form method="post" action=".">
                             <!-- Django 에서 POST 데이터 가 필요 한 곳 은 csrftoken -->
                             <div class="form-group">
-                                <textarea type="text" class="border-0 form-control " id="body" name="body" rows="12" placeholder="에서 POST 데이터 가 필요 한 곳 은"></textarea>
+                                <textarea type="text" class="border-0 form-control " id="text" rows="12" placeholder="에서 POST 데이터 가 필요 한 곳 은"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary position-absolute rounded-0 green" style=" height: 60px;bottom: -60px; right:-1px; line-height: 45px; z-index: 2">번역 하 다.</button>
+
+                            <button type="button" class="btn btn-primary position-absolute rounded-0 green" style=" height: 60px;bottom: -60px; right:-1px; line-height: 45px; z-index: 2" onclick="submit_trans()">번역 하 다</button>
                         </form>
                     </div>
                     <div class="border-light card-footer bg-transparent pl-0 pt-0 pb-0 d-flex justify-content-between align-items-center" style="height: 60px; padding-right: 105px">
                         <!-- <div class="d-flex align-items-center"> -->
-                        
-                        		<select class="border-right border-light custom-select border-top-0 border-bottom-0 border-left-0 h-100 " id="inputGroupSelect04" aria-label="Example select with button addon" style="width: 100px">
-							    <option value="해체">해체</option>
-							    <option value="해라체">해라체</option>
-							    <option value="해요체">해요체</option>
-							    <option value="합쇼체">합쇼체</option>
-							  </select>
-                        	<div class=" h-100  d-flex  align-items-center">
-                        		<span class="d-inline-block h-100 border-right border-left  border-light " tabindex="0" data-toggle="tooltip" title="다음은 번역 한 내용" style="font-size: 0; line-height: 77px; padding: 0 20px;">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
-								  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-								  <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
-								</svg></span>
+
+                                <select class="border-right border-light custom-select border-top-0 border-bottom-0 border-left-0 h-100 " id="type" aria-label="Example select with button addon" style="width: 100px">
+                                <option value="0">해체</option>
+                                <option value="1">해라체</option>
+                                <option value="2">해요체</option>
+                                <option value="3">합쇼체</option>
+                              </select>
+                            <div class=" h-100  d-flex  align-items-center">
+                                <span class="d-inline-block h-100 border-right border-left  border-light " tabindex="0" data-toggle="tooltip" title="다음은 번역 한 내용" style="font-size: 0; line-height: 77px; padding: 0 20px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
+                                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                  <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                </svg></span>
                         <!-- </div> -->
-                        <button type="button" class="btn bg-transparent border-0">다음은</button>
-                        	</div>
-                            
-							
+                        <!-- <button type="button" class="btn bg-transparent border-0" id="confirm">다음은1</button> -->
+                        &nbsp&nbsp다음은<input type="checkbox" name="is_confirm" id="is_confirm" style="width: 40px;">
+                            </div>
+
+
                     </div>
                 </div>
             </div>
@@ -83,9 +86,9 @@
                         <form method="post" action=".">
                             <!-- Django 에서 POST 데이터 가 필요 한 곳 은 csrftoken -->
                             <div class="form-group">
-                                <textarea type="text" class="border-0 form-control" id="body" name="body" rows="12" placeholder="에서 POST 데이터 가 필요 한 곳 은"></textarea>
+                                <textarea type="text" class="border-0 form-control" id="result" name="result" rows="12" placeholder="에서 POST 데이터 가 필요 한 곳 은"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary position-absolute rounded-0 green" style=" height: 60px;bottom: -60px; right:-1px; line-height: 45px;z-index: 2">번역 하 다.</button>
+                            <!-- <button type="submit" class="btn btn-primary position-absolute rounded-0 green" style=" height: 60px;bottom: -60px; right:-1px; line-height: 45px;z-index: 2">11.</button> -->
                         </form>
                     </div>
                     <div class="border-light card-footer bg-transparent" style="height: 60px;  padding-right: 105px">
@@ -103,6 +106,7 @@
             <p class="m-0 text-center text-white">Copyright &copy; www.baidu.com 2021</p>
         </div>
     </footer>
+    <script src="https://www.layuicdn.com/layui/layui.js" rel="external nofollow"></script>
      <!-- jQuery 파일.boottstrap. min. js 전에 꼭 도입 해 주세요. -->
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js" rel="external nofollow"></script>
     <!-- 팝 퍼 민 js 팝 업 창, 힌트, 드 롭 다운 메뉴 에 사용 -->
@@ -110,8 +114,35 @@
     <!-- 최신 Bootstrap 4 핵심 자 바스 크 립 트 파일 -->
     <script src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js" rel="external nofollow"></script>
     <script type="text/javascript">
-    	$(function () { $("[data-toggle='tooltip']").tooltip(); });
+        $(function () { $("[data-toggle='tooltip']").tooltip(); });
     </script>
+
+
+<script>
+   function submit_trans(){
+        var text=$("#text").val()
+        var type=$('#type option:selected').val()
+        if($('#is_confirm').is(':checked')) {
+            var is_confirm=1
+        }else{
+            var is_confirm=0
+        }
+
+        $.ajax({
+        url:'/test/',//인터페이스 주소
+        type:'POST',//전달 방식
+        data:{'text':text,'type':type,'is_confirm':is_confirm},//필요 한 인자
+        success:function(res){
+            if (res.status == 200){
+                $("#result").text(res.result)
+            }
+    }
+    })
+
+
+
+    }
+</script>
 </body>
 
 </html>

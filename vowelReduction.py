@@ -70,6 +70,12 @@ def vowelReduction(sentenceInfo):
                 'ㅙㅆ' + sentenceInfo[1][i][0][-1:]
             sentenceInfo[1][i+1][0] = sentenceInfo[1][i+1][0][4:]
 
+        # 시+어요 → 셔요 ex) 레몬이 시다.
+        if sentenceInfo[1][i][0] == 'ㅅㅣᴥ' and sentenceInfo[1][i][1] == 'VA' and sentenceInfo[1][i+1][0] == 'ㅇㅓᴥㅇㅛᴥ':
+            sentenceInfo[1][i][0] = 'ㅅㅕᴥ'
+            sentenceInfo[1][i+1][0] = '요ᴥ'
+            sentenceInfo[1][i+1][1] = 'EF'
+
         # 시+어 → 셔
         if sentenceInfo[1][i][0] == 'ㅅㅣᴥ' and sentenceInfo[1][i+1][0] == 'ㅇㅓᴥ':
             sentenceInfo[1][i][0] = 'ㅅㅕᴥ'

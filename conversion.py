@@ -97,9 +97,13 @@ def dbProcess(word_info, eng_pos, Hflag):
                 word_info.append(0)
                 return word_info
         else:
-            sql = "SELECT P.Word, P.Conjugation FROM WORDS H, WORDS P, CONVERSION WHERE H.Word = %s AND H.Wid = Hwid AND Pwid = P.Wid;"
+            if Hflag == 1:
+                sql = "SELECT P.Word, P.Conjugation FROM WORDS H, WORDS P, CONVERSION WHERE H.Word = %s AND H.Wid = Hwid AND Pwid = P.Wid;"
+            elif Hflag == 0:
+                sql = "SELECT H.Word, H.Conjugation FROM WORDS P, WORDS H, CONVERSION WHERE P.Word = %s AND P.Wid = Pwid AND Hwid = H.Wid;"
             cursor.execute(sql, word_info[0])
             result = list(cursor.fetchall())
+
             if not result:
                 sql = "SELECT Word, Conjugation FROM WORDS WHERE Wid = %s;"
                 cursor.execute(sql, wid)
