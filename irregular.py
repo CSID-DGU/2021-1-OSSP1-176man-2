@@ -140,14 +140,14 @@ def stemEndingIrregular(sentenceInfo):
 
     # 으 규칙 활용
     for i in range(len(sentenceInfo[1])):
-        if 'ㅡᴥ' in sentenceInfo[1][i][0] and sentenceInfo[1][i][1] in stem and sentenceInfo[1][i+1][0][0:2] == 'ㅇㅓ' and sentenceInfo[1][i+1][1] in ending:
+        if sentenceInfo[1][i][0][-2:0] == 'ㅡᴥ' and sentenceInfo[1][i][1] in stem and sentenceInfo[1][i+1][0][0:2] == 'ㅇㅓ' and sentenceInfo[1][i+1][1] in ending:
             sentenceInfo[1][i][0] = sentenceInfo[1][i][0][: -2] + \
                 sentenceInfo[1][i+1][0][1:]
             sentenceInfo[1][i+1][0] = ''
             sentenceInfo[1][i+1][1] = ''
 
     for i in range(len(sentenceInfo[1])):
-        if 'ㅡᴥ' in sentenceInfo[1][i][0] and sentenceInfo[1][i][1] in stem and sentenceInfo[1][i+1][0][0:2] == 'ㅇㅏ' and sentenceInfo[1][i+1][1] in ending:
+        if sentenceInfo[1][i][0][-2:0] == 'ㅡᴥ' and sentenceInfo[1][i][1] in stem and sentenceInfo[1][i+1][0][0:2] == 'ㅇㅏ' and sentenceInfo[1][i+1][1] in ending:
             sentenceInfo[1][i][0] = sentenceInfo[1][i][0][: -2] + \
                 sentenceInfo[1][i+1][0][1:]
             sentenceInfo[1][i+1][0] = ''
@@ -161,6 +161,10 @@ def stemEndingIrregular(sentenceInfo):
             continue
         if sentenceInfo[1][i][0][-2:] == 'ㄹᴥ' and sentenceInfo[1][i+1][0][0] in ['ㄴ', 'ㅅ', 'ㅂ'] and sentenceInfo[1][i+1][1] in ending:
             sentenceInfo[1][i][0] = sentenceInfo[1][i][0][:-2] + "ᴥ"
+
+    for i in range(len(sentenceInfo[0])):
+        if len(sentenceInfo[1][i][0]) == 0:
+            sentenceInfo[1][i][1] = ''
 
     for i in range(len(sentenceInfo[1])):
         sentenceInfo[1][i][0] = hgtk.text.compose(sentenceInfo[1][i][0])
