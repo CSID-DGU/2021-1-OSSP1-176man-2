@@ -47,25 +47,25 @@ def vowelReduction(sentenceInfo):
             sentenceInfo[1][i+1][0] = sentenceInfo[1][i+1][0][4:]
 
         # 반모음 ㅗ/ㅜ 계열 : ㅜ + ㅓ → ㅝ ex) 두+어 = 둬
-        if sentenceInfo[1][i][0][-2:] == 'ㅜᴥ' and sentenceInfo[1][i][0][:3] == 'ㅇㅓᴥ':
+        if sentenceInfo[1][i][0][-2:] == 'ㅜᴥ' and sentenceInfo[1][i+1][0][:3] == 'ㅇㅓᴥ':
             sentenceInfo[1][i][0] = sentenceInfo[1][i][0][0:-2] + \
                 'ㅝ' + sentenceInfo[1][i][0][-1:]
             sentenceInfo[1][i+1][0] = sentenceInfo[1][i+1][0][3:]
 
         # ㅜ + 었 → 웠
-        if sentenceInfo[1][i][0][-2:] == 'ㅜᴥ' and sentenceInfo[1][i][0][:4] == 'ㅇㅓㅆᴥ':
+        if sentenceInfo[1][i][0][-2:] == 'ㅜᴥ' and sentenceInfo[1][i+1][0][:4] == 'ㅇㅓㅆᴥ':
             sentenceInfo[1][i][0] = sentenceInfo[1][i][0][0:-2] + \
                 'ㅝㅆ' + sentenceInfo[1][i][0][-1:]
             sentenceInfo[1][i+1][0] = sentenceInfo[1][i+1][0][4:]
 
         # 반모음 ㅗ/ㅜ 계열 : ㅚ + ㅓ → ㅙ ex) 되+어 = 돼
-        if sentenceInfo[1][i][0][-2:] == 'ㅚᴥ' and sentenceInfo[1][i][0][:3] == 'ㅇㅓᴥ':
+        if sentenceInfo[1][i][0][-2:] == 'ㅚᴥ' and sentenceInfo[1][i+1][0][:3] == 'ㅇㅓᴥ':
             sentenceInfo[1][i][0] = sentenceInfo[1][i][0][0:-2] + \
                 'ㅙ' + sentenceInfo[1][i][0][-1:]
             sentenceInfo[1][i+1][0] = sentenceInfo[1][i+1][0][3:]
 
         # ㅚ + 었 → 왰
-        if sentenceInfo[1][i][0][-2:] == 'ㅚᴥ' and sentenceInfo[1][i][0][:4] == 'ㅇㅓㅆᴥ':
+        if sentenceInfo[1][i][0][-2:] == 'ㅚᴥ' and sentenceInfo[1][i+1][0][:4] == 'ㅇㅓㅆᴥ':
             sentenceInfo[1][i][0] = sentenceInfo[1][i][0][0:-2] + \
                 'ㅙㅆ' + sentenceInfo[1][i][0][-1:]
             sentenceInfo[1][i+1][0] = sentenceInfo[1][i+1][0][4:]
