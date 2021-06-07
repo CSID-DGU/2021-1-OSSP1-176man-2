@@ -91,11 +91,21 @@ def stemIrregular(sentenceInfo):
 def endingIrregular(sentenceInfo):
 
     for i in range(len(sentenceInfo[1])-1):
-        if(sentenceInfo[1][i][0][-1] == '하' and sentenceInfo[1][i+1][0][0] == '아'):
+        if(sentenceInfo[1][i][0][-1] == '하' and sentenceInfo[1][i+1][0] == '아'):
             sentenceInfo[1][i][0] = sentenceInfo[1][i][0][:-1] + '해'
-            sentenceInfo[1][i+1] = [' ', ' ']
-        elif(sentenceInfo[1][i][0][-2:] == '푸르' and sentenceInfo[1][i+1][0][0] == '어'):
+            del(sentenceInfo[1][i + 1])
+        elif(sentenceInfo[1][i][0][-1] == '하' and sentenceInfo[1][i+1][0] == '아요'):
+            sentenceInfo[1][i][0] = sentenceInfo[1][i][0][:-1] + '해'
+            sentenceInfo[1][i+1][0] = "요"
+        elif(sentenceInfo[1][i][0][-1] == '하' and sentenceInfo[1][i+1][0] == '았'):
+            sentenceInfo[1][i][0] = sentenceInfo[1][i][0][:-1] + '했'
+            del(sentenceInfo[1][i + 1])
+        elif(sentenceInfo[1][i][0][-2:] == '푸르' and sentenceInfo[1][i+1][0] == '어'):
             sentenceInfo[1][i+1][0] = '러' + sentenceInfo[1][i+1][0][1:]
+        elif(sentenceInfo[1][i][0][-2:] == '푸르' and sentenceInfo[1][i+1][0] == '어요'):
+            sentenceInfo[1][i+1][0] = '러요' + sentenceInfo[1][i+1][0][1:]
+        elif(sentenceInfo[1][i][0][-2:] == '푸르' and sentenceInfo[1][i+1][0][0] == '었'):
+            sentenceInfo[1][i+1][0] = '렀' + sentenceInfo[1][i+1][0][1:]
 
     sentenceInfo[0] = list(map(lambda x: x[0], sentenceInfo[1]))
 
