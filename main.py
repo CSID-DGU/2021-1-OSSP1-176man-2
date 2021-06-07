@@ -8,6 +8,7 @@ import irregular
 import honorification
 import conversion
 import vowelReduction
+import josa
 
 '''
 @param inputSentence 사용자가 입력한 영어 문장
@@ -56,24 +57,32 @@ def main(inputSentence, inputSentenceStyle, subjectHonorification):
     sentenceHae = sentenceStyle.hae(sentenceInfoList[0], sentenceType)
     sentenceHae = irregular.irregular(sentenceHae)
     sentenceHae = honorification.honorification2(sentenceHae)
+    sentenceHae = irregular.irregular(sentenceHae)
+    sentenceHae = josa.josa(sentenceHae)
     sentenceHae = vowelReduction.vowelReduction(sentenceHae)
     outputSentence.append(hgtkTest.textCompose(sentenceHae[0]))
     # 해라
     sentenceHaera = sentenceStyle.haera(sentenceInfoList[1], sentenceType)
     sentenceHaera = irregular.irregular(sentenceHaera)
     sentenceHaera = honorification.honorification2(sentenceHaera)
+    sentenceHaera = irregular.irregular(sentenceHaera)
+    sentenceHaera = josa.josa(sentenceHaera)
     sentenceHaera = vowelReduction.vowelReduction(sentenceHaera)
     outputSentence.append(hgtkTest.textCompose(sentenceHaera[0]))
     # 해요
     sentenceHaeyo = sentenceStyle.haeyo(sentenceInfoList[2], sentenceType)
     sentenceHaeyo = irregular.irregular(sentenceHaeyo)
     sentenceHaeyo = honorification.honorification2(sentenceHaeyo)
+    sentenceHaeyo = irregular.irregular(sentenceHaeyo)
+    sentenceHaeyo = josa.josa(sentenceHaeyo)
     sentenceHaeyo = vowelReduction.vowelReduction(sentenceHaeyo)
     outputSentence.append(hgtkTest.textCompose(sentenceHaeyo[0]))
     # 합쇼
     sentenceHabsyo = sentenceStyle.habsyo(sentenceInfoList[3], sentenceType)
     sentenceHabsyo = irregular.irregular(sentenceHabsyo)
     sentenceHabsyo = honorification.honorification2(sentenceHabsyo)
+    sentenceHabsyo = irregular.irregular(sentenceHabsyo)
+    sentenceHabsyo = josa.josa(sentenceHabsyo)
     sentenceHabsyo = vowelReduction.vowelReduction(sentenceHabsyo)
     outputSentence.append(hgtkTest.textCompose(sentenceHabsyo[0]))
 
