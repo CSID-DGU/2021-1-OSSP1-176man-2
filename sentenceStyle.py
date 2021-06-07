@@ -26,13 +26,15 @@ def hae(sentenceInfo, sentenceType):
                 if tmp[-1] == '르':
                     verb = hgtk.letter.decompose(tmp[-2])
                 # 전 형태소의 받침이 있을 때
-                if verb[-1] in consonant:
+                if hgtk.checker.has_batchim(tmp[-1]):
+                    '''
                     # 전 형태소의 모음이 양성일 때
                     if verb[-2] in pos_vowel:
                         sentenceInfo[1][i][0] = '아'
                     # 전 형태소의 모음이 음성일 때    
                     elif verb[-2] in neg_vowel:
-                        sentenceInfo[1][i][0] = '어'
+                    '''
+                    sentenceInfo[1][i][0] = '어'
                 # 전 형태소의 받침이 없고 'ㅓ'로 끝날 때
                 elif verb[-2] == 'ㅓ':
                     sentenceInfo[1][i][0] = '어'
@@ -58,6 +60,7 @@ def hae(sentenceInfo, sentenceType):
                 # 전 형태소의 받침이 없을 때
                 else:
                     sentenceInfo[1][i][0] = '야'
+        
     sentenceInfo[0] = list(map(lambda x: x[0], sentenceInfo[1]))
     return sentenceInfo # morph, pos 리스트형으로 반환
 
@@ -78,14 +81,14 @@ def haera(sentenceInfo, sentenceType):
             else:
                 isHangul = False
 
-            if isHangul and isBatchim and sentenceInfo[1][i][1] in ['VV', 'XSV'] and sentenceInfo[1][i+1][1] == 'EF':
+            if isHangul and isBatchim and sentenceInfo[1][i][1] in ['VV', 'XSV', 'VX'] and sentenceInfo[1][i+1][1] == 'EF':
                 sentenceInfo[1][i+1] = ['는다', 'EF']
-            if isHangul and not isBatchim and sentenceInfo[1][i][1] in ['VV', 'XSV'] and sentenceInfo[1][i+1][1] == 'EF':
+            if isHangul and not isBatchim and sentenceInfo[1][i][1] in ['VV', 'XSV', 'VX'] and sentenceInfo[1][i+1][1] == 'EF':
                 sentenceInfo[1][i+1] = ['ㄴ다', 'EF']
 
         # 다 : 종결어미 앞이 서술격 조사일 경우
         for i in range(len(sentenceInfo[1])):
-            if sentenceInfo[1][i][1] in ['VCP', 'VCN', 'VX', 'NNB', 'EP'] and sentenceInfo[1][i+1][1] == 'EF':
+            if sentenceInfo[1][i][1] in ['VCP', 'VCN', 'NNB', 'EP'] and sentenceInfo[1][i+1][1] == 'EF':
                 sentenceInfo[1][i+1] = ['다', 'EF']
 
         # 종결어미 앞이 형용사인 경우, '군' → '다'로 수정
@@ -161,12 +164,7 @@ def haeyo(sentenceInfo, sentenceType):
                     verb = hgtk.letter.decompose(tmp[-2])
                 # 전 형태소의 받침이 있을 때
                 if hgtk.checker.has_batchim(tmp[-1]):
-                    # 전 형태소의 모음이 양성일 때
-                    if verb[-2] in pos_vowel:
-                        sentenceInfo[1][i][0] = '아요'
-                    # 전 형태소의 모음이 음성일 때    
-                    elif verb[-2] in neg_vowel:
-                        sentenceInfo[1][i][0] = '어요'
+                    sentenceInfo[1][i][0] = '어요'
                 # 전 형태소의 받침이 없고 'ㅏ'나 'ㅓ'로 끝날 때
                 elif verb[-2] == 'ㅏ' or verb[-2] == 'ㅓ':
                     sentenceInfo[1][i][0] = '요'
