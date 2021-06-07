@@ -56,6 +56,7 @@ def stemIrregular(sentenceInfo):
                     ending.append('ㅜ')
                     ending.append(tmp)
                     ending.append('ᴥ')
+                    print("wowowowwowowo", ending)
                     sentenceInfo[1][idx][0] = hgtk.text.compose(stem)
                     sentenceInfo[1][idx+1][0] = hgtk.text.compose(ending)
 
