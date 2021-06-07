@@ -1,6 +1,14 @@
 import hgtk
 
 
+def irregular(sentenceInfo):
+    stemStep = stemIrregular(sentenceInfo)
+    endingStep = endingIrregular(stemStep)
+    sentenceInfo = stemEndingIrregular(endingStep)
+
+    return sentenceInfo
+
+
 def stemIrregular(sentenceInfo):
 
     # stem_type: 불규칙 활용 처리 시 '어간'의 형태소 종류
