@@ -7,6 +7,7 @@ import copy
 import irregular
 import honorification
 import conversion
+import vowelReduction
 
 # 사용자가 영어문장과 문체, 주어 높임을 선택해서 입력
 print("번역할 영어문장을 입력해주세요(문법적으로 완벽한 문장): ")
@@ -50,15 +51,19 @@ print(tmp)
 # 각 문체에 맞는 함수 실행후 어미 변경, 불규칙 처리 확인
 sentenceHae = sentenceStyle.hae(sentenceInfoList[0], sentenceType)
 sentenceHae = irregular.irregular(sentenceHae)
+sentenceHae = vowelReduction.vowelReduction(sentenceHae)
 outputSentence.append(hgtkTest.textCompose(sentenceHae[0]))
 sentenceHaera = sentenceStyle.haera(sentenceInfoList[1], sentenceType)
 sentenceHaera = irregular.irregular(sentenceHaera)
+sentenceHaera = vowelReduction.vowelReduction(sentenceHaera)
 outputSentence.append(hgtkTest.textCompose(sentenceHaera[0]))
 sentenceHaeyo = sentenceStyle.haeyo(sentenceInfoList[2], sentenceType)
 sentenceHaeyo = irregular.irregular(sentenceHaeyo)
+sentenceHaeyo = vowelReduction.vowelReduction(sentenceHaeyo)
 outputSentence.append(hgtkTest.textCompose(sentenceHaeyo[0]))
 sentenceHabsyo = sentenceStyle.habsyo(sentenceInfoList[3], sentenceType)
 sentenceHabsyo = irregular.irregular(sentenceHabsyo)
+sentenceHabsyo = vowelReduction.vowelReduction(sentenceHabsyo)
 outputSentence.append(hgtkTest.textCompose(sentenceHabsyo[0]))
 
 print(outputSentence)

@@ -115,11 +115,3 @@ def vowelReduction(sentenceInfo):
     sentenceInfo[0] = list(map(lambda x: x[0], sentenceInfo[1]))
 
     return sentenceInfo
-
-
-# sentenceInfo = [['건강', '을', ' ', '위하', '아', ' ', '담배', '를', ' ', '끊', '으시', '시', '라=', '!'], [['건강', 'NNG'], ['을', 'JKO'], [' ', 'BLK'], [
-#    '위하', 'VV'], ['아', 'EC'], [' ', 'BLK'], ['담배', 'NNG'], ['를', 'JKO'], [' ', 'BLK'], ['끊', 'VV'], ['으시', 'EP'], ['시', 'EP'], ['라', 'EF'], ['!', 'SF']]]
-# print(vowelReduction(sentenceInfo))
-sentenceInfo = [['나', '는', '달리', '어', '학교', '에', '가', '았', '다', '.'], [['나', 'NP'], ['는', 'JX'], [
-    '달리', 'VV'], ['었다', 'EC'], ['학교', 'NNG'], ['에', 'JKB'], ['가', 'VV'], ['았', 'EP'], ['다', 'EF'], ['.', 'SF']]]
-print(vowelReduction(sentenceInfo))
