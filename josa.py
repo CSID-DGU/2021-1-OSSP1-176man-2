@@ -11,13 +11,15 @@ consonant = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ',
              'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']
 noun = ['NNG', 'NNP', 'NNB', 'NR', 'NP', 'XSN']
 vb = ['VV', 'VA', 'XSV', 'XSA', 'VX', 'EP']
+check = ['EC', 'EP', 'JKS', 'JKC', 'JKG',
+         'JKO', 'JKB', 'JKV', 'JKQ', 'JC', 'JX']
 
 
 def josa(sentenceInfo):
 
     for i in range(1, len(sentenceInfo[1])):
         # 앞 token이 공백이 아닌 경우
-        if sentenceInfo[1][i-1][0] != " ":
+        if sentenceInfo[1][i-1][0] != " " and sentenceInfo[1][i][1] in check:
 
             vowelCheck = hgtk.letter.decompose(sentenceInfo[1][i-1][0][-1])
 
@@ -88,5 +90,7 @@ def josa(sentenceInfo):
                 # 앞 음절의 모음이 음성인 경우
                 else:
                     sentenceInfo[1][i][0] = "어요"
+
+    sentenceInfo[0] = list(map(lambda x: x[0], sentenceInfo[1]))
 
     return sentenceInfo
