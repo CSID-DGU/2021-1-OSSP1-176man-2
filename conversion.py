@@ -136,7 +136,7 @@ def conversion(sentenceInfo, eng_pos):
                 flag = 1
             sentenceInfo[1][idx] = list(conv)[:-1]
 
-    sentenceInfo.append(flag)
+    sentenceInfo[2][1] = flag
     sentenceInfo[0] = list(map(lambda x: x[0], sentenceInfo[1]))
 
     return sentenceInfo
