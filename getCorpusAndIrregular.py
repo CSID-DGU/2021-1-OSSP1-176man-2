@@ -22,7 +22,7 @@ return : 한국어 또는 영어 말뭉치 리스트 (type = list)
 '''
 
 
-def getCorpus(fname, lang, start_idx=0, idx_range=20):
+def getCorpus(fname, lang, start_idx=140, idx_range=40):
     # pd.set_option('display.max_rows', None)  # row 생략 없이 출력
     # pd.set_option('display.max_columns', None)  # col 생략 없이 출력
 
@@ -88,8 +88,6 @@ def getIrregular(original_text):
         w_list = [word1, word]
         komoran_word_list = vowelReduction.vowelReduction(w_list)
         komoran_word_list = komoran_word_list[1]
-        print("-----")
-        print(komoran_word_list)
 
         # stem_flag : 어절내에 불규칙이 가능한 용언이 있는지 여부를 파악하기 위한 flag 변수
         stem_flag = False
@@ -277,7 +275,6 @@ print("============")
 print(irregular_list)
 print("============")
 irregular_list = list(irregular_list)
-print(irregular_list[1])
 irregular_list = eliminate(irregular_list)
 
 print(irregular_list)
