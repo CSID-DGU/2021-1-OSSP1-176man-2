@@ -3,8 +3,7 @@ import os
 import sys
 from django.core.management.commands.runserver import Command as Runserver
 if __name__ == "__main__":
-    # Runserver.default_addr = '0.0.0.0'  # 修改默认地址
-    Runserver.default_port = '5000'  # 修改默认端口
+    Runserver.default_port = '5000'
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Web_Assignment.settings")
     try:
         from django.core.management import execute_from_command_line
