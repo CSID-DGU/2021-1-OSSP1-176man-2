@@ -17,7 +17,7 @@ def honorification1(sentenceInfo):
                 sentenceInfo[1][i] = '시'
                 if sentenceInfo[1][i + 1][0] == '시' and (sentenceInfo[1][i][1] == 'EC' or sentenceInfo[1][i][1] == 'EP'):
                     del(sentenceInfo[1][i + 1])
-            elif (sentenceInfo[1][i][1] == 'EF'):
+            if (sentenceInfo[1][i][1] == 'EF'):
                 for j in range(i - 1, 0, -1):
                     if sentenceInfo[1][j][1] in stem_type:
                         stem = sentenceInfo[1][j][0]
@@ -42,8 +42,6 @@ def honorification1(sentenceInfo):
 
 
 def honorification2(sentenceInfo):
-    stem_type = ['VV', 'VA', 'VX', 'VCP', 'VCN', 'XSN', 'XSV', 'XSA', 'XR']
-
     for i in range(len(sentenceInfo[1])-1, 0, -1):
         if sentenceInfo[1][i][0] == '시' and (sentenceInfo[1][i][1] == 'EC' or sentenceInfo[1][i][1] == 'EP'):
             if hgtk.checker.has_batchim(sentenceInfo[1][i-1][0][-1]):
