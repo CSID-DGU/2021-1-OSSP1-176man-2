@@ -19,6 +19,8 @@ return outputSentence 사용자가 선택한 옵션에 해당하는 작업을 �
 
 def main(inputSentence, inputSentenceStyle, subjectHonorification):
     outputSentence = []
+    inputSentenceStyle, subjectHonorification = int(
+        inputSentenceStyle), int(subjectHonorification)
 
     sentenceType = engInputAnalysis.sentenceType(inputSentence)  # 문장종류 확인
     # 주체 높임법 예외처리
@@ -76,16 +78,16 @@ def main(inputSentence, inputSentenceStyle, subjectHonorification):
     outputSentence.append(hgtkTest.textCompose(sentenceHabsyo[0]))
 
     print(outputSentence)
-    return outputSentence
+    return outputSentence[inputSentenceStyle]
 
 
-# 사용자가 영어문장과 문체, 주어 높임을 선택해서 입력
-print("번역할 영어문장을 입력해주세요(문법적으로 완벽한 문장): ")
-inputSentence = input()
-print("번역된 문장의 문체를 선택해주세요(해, 해라, 해요, 합쇼): ")
-inputSentenceStyle = input()
-print("주어 높임 1, 주어 안높임 0: ")
-subjectHonorification = int(input())
+# # 사용자가 영어문장과 문체, 주어 높임을 선택해서 입력
+# print("번역할 영어문장을 입력해주세요(문법적으로 완벽한 문장): ")
+# inputSentence = input()
+# print("번역된 문장의 문체를 선택해주세요(해, 해라, 해요, 합쇼): ")
+# inputSentenceStyle = input()
+# print("주어 높임 1, 주어 안높임 0: ")
+# subjectHonorification = int(input())
 
 
-main(inputSentence, inputSentenceStyle, subjectHonorification)
+# main(inputSentence, inputSentenceStyle, subjectHonorification)

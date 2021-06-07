@@ -1,0 +1,1 @@
+from Web_Assignment import settings
