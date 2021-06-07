@@ -97,6 +97,9 @@ def endingIrregular(sentenceInfo):
         elif(sentenceInfo[1][i][0][-1] == '하' and sentenceInfo[1][i+1][0] == '아요'):
             sentenceInfo[1][i][0] = sentenceInfo[1][i][0][:-1] + '해'
             sentenceInfo[1][i+1][0] = "요"
+        elif(sentenceInfo[1][i][0][-1] == '하' and sentenceInfo[1][i+1][0] == '어야'):
+            sentenceInfo[1][i][0] = sentenceInfo[1][i][0][:-1] + '해'
+            sentenceInfo[1][i+1][0] = "야"
         elif(sentenceInfo[1][i][0][-1] == '하' and sentenceInfo[1][i+1][0] == '았'):
             sentenceInfo[1][i][0] = sentenceInfo[1][i][0][:-1] + '했'
             del(sentenceInfo[1][i + 1])
