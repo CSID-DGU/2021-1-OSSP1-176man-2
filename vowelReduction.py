@@ -47,25 +47,25 @@ def vowelReduction(sentenceInfo):
             sentenceInfo[1][i+1][0] = sentenceInfo[1][i+1][0][4:]
 
         # 반모음 ㅗ/ㅜ 계열 : ㅜ + ㅓ → ㅝ ex) 두+어 = 둬
-        if sentenceInfo[1][i][0][-2:] == 'ㅜᴥ' and sentenceInfo[1][i][0][:3] == 'ㅇㅓᴥ':
+        if sentenceInfo[1][i][0][-2:] == 'ㅜᴥ' and sentenceInfo[1][i+1][0][:3] == 'ㅇㅓᴥ':
             sentenceInfo[1][i][0] = sentenceInfo[1][i][0][0:-2] + \
                 'ㅝ' + sentenceInfo[1][i][0][-1:]
             sentenceInfo[1][i+1][0] = sentenceInfo[1][i+1][0][3:]
 
         # ㅜ + 었 → 웠
-        if sentenceInfo[1][i][0][-2:] == 'ㅜᴥ' and sentenceInfo[1][i][0][:4] == 'ㅇㅓㅆᴥ':
+        if sentenceInfo[1][i][0][-2:] == 'ㅜᴥ' and sentenceInfo[1][i+1][0][:4] == 'ㅇㅓㅆᴥ':
             sentenceInfo[1][i][0] = sentenceInfo[1][i][0][0:-2] + \
                 'ㅝㅆ' + sentenceInfo[1][i][0][-1:]
             sentenceInfo[1][i+1][0] = sentenceInfo[1][i+1][0][4:]
 
         # 반모음 ㅗ/ㅜ 계열 : ㅚ + ㅓ → ㅙ ex) 되+어 = 돼
-        if sentenceInfo[1][i][0][-2:] == 'ㅚᴥ' and sentenceInfo[1][i][0][:3] == 'ㅇㅓᴥ':
+        if sentenceInfo[1][i][0][-2:] == 'ㅚᴥ' and sentenceInfo[1][i+1][0][:3] == 'ㅇㅓᴥ':
             sentenceInfo[1][i][0] = sentenceInfo[1][i][0][0:-2] + \
                 'ㅙ' + sentenceInfo[1][i][0][-1:]
             sentenceInfo[1][i+1][0] = sentenceInfo[1][i+1][0][3:]
 
         # ㅚ + 었 → 왰
-        if sentenceInfo[1][i][0][-2:] == 'ㅚᴥ' and sentenceInfo[1][i][0][:4] == 'ㅇㅓㅆᴥ':
+        if sentenceInfo[1][i][0][-2:] == 'ㅚᴥ' and sentenceInfo[1][i+1][0][:4] == 'ㅇㅓㅆᴥ':
             sentenceInfo[1][i][0] = sentenceInfo[1][i][0][0:-2] + \
                 'ㅙㅆ' + sentenceInfo[1][i][0][-1:]
             sentenceInfo[1][i+1][0] = sentenceInfo[1][i+1][0][4:]
@@ -115,11 +115,3 @@ def vowelReduction(sentenceInfo):
     sentenceInfo[0] = list(map(lambda x: x[0], sentenceInfo[1]))
 
     return sentenceInfo
-
-
-# sentenceInfo = [['건강', '을', ' ', '위하', '아', ' ', '담배', '를', ' ', '끊', '으시', '시', '라=', '!'], [['건강', 'NNG'], ['을', 'JKO'], [' ', 'BLK'], [
-#    '위하', 'VV'], ['아', 'EC'], [' ', 'BLK'], ['담배', 'NNG'], ['를', 'JKO'], [' ', 'BLK'], ['끊', 'VV'], ['으시', 'EP'], ['시', 'EP'], ['라', 'EF'], ['!', 'SF']]]
-# print(vowelReduction(sentenceInfo))
-sentenceInfo = [['나', '는', '달리', '어', '학교', '에', '가', '았', '다', '.'], [['나', 'NP'], ['는', 'JX'], [
-    '달리', 'VV'], ['었다', 'EC'], ['학교', 'NNG'], ['에', 'JKB'], ['가', 'VV'], ['았', 'EP'], ['다', 'EF'], ['.', 'SF']]]
-print(vowelReduction(sentenceInfo))
