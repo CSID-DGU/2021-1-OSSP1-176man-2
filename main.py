@@ -2,14 +2,9 @@ import naverPapago
 import komoranSpacing
 import hgtkTest
 import engInputAnalysis
-import hae
-import haera
-import haeyo
-import hapshow
+import sentenceStyle
 import copy
-import stemIrregular
-import endingIrregular
-import stemEndingIrregular
+import irregular
 import honorification
 import conversion
 
@@ -35,8 +30,7 @@ if sentenceType == 'command':
             print("error")
             exit(1)
 
-sentenceInfo, eng_pos = naverPapago.translate(
-    inputSentence)  # 파파고API로 번역 및 Komoran으로 형태소 분석
+sentenceInfo, eng_pos = naverPapago.translate(inputSentence)  # 파파고API로 번역 및 Komoran으로 형태소 분석
 tmp = komoranSpacing.Spacing(sentenceInfo[1])  # 분석된 형태소를 이용하여 띄어쓰기 처리
 tmp.append([subjectHonorification, 0])  # 주체 높임법 플래그, 불규칙 활용 여부 플래그 리스트에 추가
 
@@ -53,26 +47,18 @@ for i in range(4):
 
 print(tmp)
 
-# 사용자가 선택한 문체에 맞는 함수 실행후 어미 변경
-sentenceHae = hae.hae(sentenceInfoList[0], sentenceType)
-sentenceHae = stemIrregular.stemIrregular(sentenceHae)
-sentenceHae = endingIrregular.endingIrregular(sentenceHae)
-sentenceHae = stemEndingIrregular.stemEndingIrregular(sentenceHae)
+# 각 문체에 맞는 함수 실행후 어미 변경, 불규칙 처리 확인
+sentenceHae = sentenceStyle.hae(sentenceInfoList[0], sentenceType)
+sentenceHae = irregular.irregular(sentenceHae)
 outputSentence.append(hgtkTest.textCompose(sentenceHae[0]))
-sentenceHaera = haera.haera(sentenceInfoList[1], sentenceType)
-sentenceHaera = stemIrregular.stemIrregular(sentenceHaera)
-sentenceHaera = endingIrregular.endingIrregular(sentenceHaera)
-sentenceHaera = stemEndingIrregular.stemEndingIrregular(sentenceHaera)
+sentenceHaera = sentenceStyle.haera(sentenceInfoList[0], sentenceType)
+sentenceHaera = irregular.irregular(sentenceHaera)
 outputSentence.append(hgtkTest.textCompose(sentenceHaera[0]))
-sentenceHaeyo = haeyo.haeyo(sentenceInfoList[2], sentenceType)
-sentenceHaeyo = stemIrregular.stemIrregular(sentenceHaeyo)
-sentenceHaeyo = endingIrregular.endingIrregular(sentenceHaeyo)
-sentenceHaeyo = stemEndingIrregular.stemEndingIrregular(sentenceHaeyo)
+sentenceHaeyo = sentenceStyle.haeyo(sentenceInfoList[0], sentenceType)
+sentenceHaeyo = irregular.irregular(sentenceHaeyo)
 outputSentence.append(hgtkTest.textCompose(sentenceHaeyo[0]))
-sentenceHapshow = hapshow.hapshow(sentenceInfoList[3], sentenceType)
-sentenceHapshow = stemIrregular.stemIrregular(sentenceHapshow)
-sentenceHapshow = endingIrregular.endingIrregular(sentenceHapshow)
-sentenceHapshow = stemEndingIrregular.stemEndingIrregular(sentenceHapshow)
-outputSentence.append(hgtkTest.textCompose(sentenceHapshow[0]))
+sentenceHabsyo = sentenceStyle.habsyo(sentenceInfoList[0], sentenceType)
+sentenceHabsyo = irregular.irregular(sentenceHabsyo)
+outputSentence.append(hgtkTest.textCompose(sentenceHabsyo[0]))
 
 print(outputSentence)
