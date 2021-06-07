@@ -17,7 +17,7 @@ def vowelReduction(sentenceInfo):
 
     for i in range(len(sentenceInfo[1])-1):
         # 반모임 ㅣ 계열 : ㅣ + 어 → ㅕ ex) 달리+어 = 달려
-        if sentenceInfo[1][i][0] != 'ㅅㅣᴥ' and sentenceInfo[1][i][0][-2:] == 'ㅣᴥ' and sentenceInfo[1][i+1][0][:3] == 'ㅇㅓᴥ':
+        if sentenceInfo[1][i][0] != 'ㅅㅣᴥ' and sentenceInfo[1][i][0] != 'ㅇㅡᴥㅅㅣᴥ' and sentenceInfo[1][i][0][-2:] == 'ㅣᴥ' and sentenceInfo[1][i+1][0][:3] == 'ㅇㅓᴥ':
             sentenceInfo[1][i][0] = sentenceInfo[1][i][0][0:-2] + \
                 'ㅕ' + sentenceInfo[1][i][0][-1:]
             sentenceInfo[1][i+1][0] = sentenceInfo[1][i+1][0][3:]
@@ -94,11 +94,15 @@ def vowelReduction(sentenceInfo):
             sentenceInfo[1][i+1][1] = ''
 
         # 으시 + 어
-        if sentenceInfo[1][i][0] == 'ㅇㅡᴥㅅㅣᴥ' and sentenceInfo[1][i+1][0] == 'ㅇㅓᴥ':
+        if sentenceInfo[1][i][0] == 'ㅇㅡᴥㅅㅣᴥ' and sentenceInfo[1][i+1][0] == 'ㅇㅓᴥ' and sentenceInfo[1][i+2][0] != 'ㅇㅛᴥ':
             sentenceInfo[1][i][0] = 'ㅇㅡᴥㅅㅕᴥ'
             sentenceInfo[1][i+1][0] = ''
             sentenceInfo[1][i+1][1] = ''
 
+        if sentenceInfo[1][i][0] == 'ㅇㅡᴥㅅㅣᴥ' and sentenceInfo[1][i+1][0] == 'ㅇㅓᴥ' and sentenceInfo[1][i+2][0] == 'ㅇㅛᴥ':
+            sentenceInfo[1][i][0] = 'ㅇㅡᴥㅅㅔᴥ'
+            sentenceInfo[1][i+1][0] = ''
+            sentenceInfo[1][i+1][1] = ''
         # 으시 + 어요
         if sentenceInfo[1][i][0] == 'ㅇㅡᴥㅅㅣᴥ' and sentenceInfo[1][i+1][0] == 'ㅇㅓᴥㅇㅛᴥ':
             sentenceInfo[1][i][0] = 'ㅇㅡᴥㅅㅔᴥㅇㅛᴥ'
