@@ -21,7 +21,12 @@ def josa(sentenceInfo):
         # 앞 token이 공백이 아닌 경우
         if sentenceInfo[1][i-1][0] != " " and sentenceInfo[1][i][1] in check:
 
-            vowelCheck = hgtk.letter.decompose(sentenceInfo[1][i-1][0][-1])
+            if(hgtk.checker.has_batchim(sentenceInfo[1][i-1][0][-1])):
+                vowelCheck = hgtk.letter.decompose(
+                    sentenceInfo[1][i-1][0][-1])[-3]
+            else:
+                vowelCheck = hgtk.letter.decompose(
+                    sentenceInfo[1][i-1][0][-1])[-2]
 
             # '은', '는' 처리
             if(sentenceInfo[1][i][0] == "은" or sentenceInfo[1][i][0] == "는"):
