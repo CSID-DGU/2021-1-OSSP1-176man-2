@@ -131,14 +131,12 @@ return : 단어 변환이 이루어진 후의 sentence
 
 
 def conversion(sentenceInfo, eng_pos):
-    target = ['NNG', 'VV', 'VA', 'XSV']
     flag = 0
     for idx, symbol in enumerate(sentenceInfo[1]):
-        if(symbol[1] in target):
-            conv = dbProcess(symbol, eng_pos, sentenceInfo[2][0])
-            if conv[2] == 1:
-                flag = 1
-            sentenceInfo[1][idx] = list(conv)[:-1]
+        conv = dbProcess(symbol, eng_pos, sentenceInfo[2][0])
+        if conv[2] == 1:
+            flag = 1
+        sentenceInfo[1][idx] = list(conv)[:-1]
 
     sentenceInfo[2][1] = flag
     sentenceInfo[0] = list(map(lambda x: x[0], sentenceInfo[1]))
