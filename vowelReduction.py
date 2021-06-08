@@ -11,7 +11,6 @@ import hgtk
 
 
 def vowelReduction(sentenceInfo):
-
     for i in range(len(sentenceInfo[1])):
         sentenceInfo[1][i][0] = hgtk.text.decompose(sentenceInfo[1][i][0])
 
@@ -94,12 +93,12 @@ def vowelReduction(sentenceInfo):
             sentenceInfo[1][i+1][1] = ''
 
         # 으시 + 어
-        if sentenceInfo[1][i][0] == 'ㅇㅡᴥㅅㅣᴥ' and sentenceInfo[1][i+1][0] == 'ㅇㅓᴥ' and sentenceInfo[1][i+2][0] != 'ㅇㅛᴥ':
+        if len(sentenceInfo[1]) - 2 > i and sentenceInfo[1][i][0] == 'ㅇㅡᴥㅅㅣᴥ' and sentenceInfo[1][i+1][0] == 'ㅇㅓᴥ' and sentenceInfo[1][i+2][0] != 'ㅇㅛᴥ':
             sentenceInfo[1][i][0] = 'ㅇㅡᴥㅅㅕᴥ'
             sentenceInfo[1][i+1][0] = ''
             sentenceInfo[1][i+1][1] = ''
 
-        if sentenceInfo[1][i][0] == 'ㅇㅡᴥㅅㅣᴥ' and sentenceInfo[1][i+1][0] == 'ㅇㅓᴥ' and sentenceInfo[1][i+2][0] == 'ㅇㅛᴥ':
+        if len(sentenceInfo[1]) - 2 > i and sentenceInfo[1][i][0] == 'ㅇㅡᴥㅅㅣᴥ' and sentenceInfo[1][i+1][0] == 'ㅇㅓᴥ' and sentenceInfo[1][i+2][0] == 'ㅇㅛᴥ':
             sentenceInfo[1][i][0] = 'ㅇㅡᴥㅅㅔᴥ'
             sentenceInfo[1][i+1][0] = ''
             sentenceInfo[1][i+1][1] = ''
