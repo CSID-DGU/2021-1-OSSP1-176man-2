@@ -5,12 +5,6 @@ import hgtk
 조사 전 마지막 글자가 받침이 없는 경우 : 는, 가, 를, 와, 로
 '''
 pos_vowel = ['ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅛ']
-neg_vowel = ['ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅚ', 'ㅙ',
-             'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅣ', 'ㅢ']
-consonant = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ',
-             'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']
-noun = ['NNG', 'NNP', 'NNB', 'NR', 'NP', 'XSN']
-vb = ['VV', 'VA', 'XSV', 'XSA', 'VX', 'EP']
 check = ['EC', 'EP', 'EF', 'JKS', 'JKC', 'JKG',
          'JKO', 'JKB', 'JKV', 'JKQ', 'JC', 'JX']
 
@@ -19,7 +13,7 @@ def josa(sentenceInfo):
 
     for i in range(1, len(sentenceInfo[1])):
         # 앞 token이 공백이 아닌 경우
-        if sentenceInfo[1][i-1][0] != " " and sentenceInfo[1][i][1] in check:
+        if hgtk.checker.is_hangul(sentenceInfo[1][i-1][0]) and sentenceInfo[1][i][1] in check:
 
             vowelCheck = hgtk.letter.decompose(sentenceInfo[1][i-1][0][-1])
 
