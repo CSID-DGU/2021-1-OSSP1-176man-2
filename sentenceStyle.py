@@ -133,9 +133,9 @@ def haera(sentenceInfo, sentenceType):
             else:
                 isHangul = False
 
-            if isHangul and isBatchim and sentenceInfo[1][i][1] in ['VV'] and sentenceInfo[1][i+1][1] == 'EF':
+            if isHangul and isBatchim and sentenceInfo[1][i][1] in vb and sentenceInfo[1][i+1][1] == 'EF':
                 sentenceInfo[1][i+1] = ['어라', 'EF']
-            if isHangul and not isBatchim and sentenceInfo[1][i][1] in ['VV'] and sentenceInfo[1][i+1][1] == 'EF':
+            if isHangul and not isBatchim and sentenceInfo[1][i][1] in vb and sentenceInfo[1][i+1][1] == 'EF':
                 sentenceInfo[1][i+1] = ['라', 'EF']
 
         if 'EF' not in exception:
