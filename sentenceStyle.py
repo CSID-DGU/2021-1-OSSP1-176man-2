@@ -87,15 +87,19 @@ def haera(sentenceInfo, sentenceType):
             else:
                 isHangul = False
 
-            if isHangul and isBatchim and sentenceInfo[1][i][1] in ['VV', 'XSV'] and sentenceInfo[1][i+1][1] == 'EF':
+            if isHangul and isBatchim and sentenceInfo[1][i][1] in ['VV', 'XSV', 'VX', 'XSA'] and sentenceInfo[1][i+1][1] == 'EF':
                 sentenceInfo[1][i+1] = ['는다', 'EF']
-            if isHangul and not isBatchim and sentenceInfo[1][i][1] in ['VV', 'XSV', 'VX'] and sentenceInfo[1][i+1][1] == 'EF':
+            if isHangul and not isBatchim and sentenceInfo[1][i][1] in ['VV', 'XSV', 'VX', 'XSA'] and sentenceInfo[1][i+1][1] == 'EF':
                 sentenceInfo[1][i+1] = ['ㄴ다', 'EF']
 
         # 다 : 종결어미 앞이 서술격 조사일 경우
         for i in range(len(sentenceInfo[1])):
             if sentenceInfo[1][i][1] in ['VCP', 'VCN', 'NNB', 'EP', 'VX'] and sentenceInfo[1][i+1][1] == 'EF':
                 sentenceInfo[1][i+1] = ['다', 'EF']
+
+        for i in range(len(sentenceInfo[1])):
+            if sentenceInfo[1][i][1] in vb and sentenceInfo[1][i+1] == ['시', 'EP'] and sentenceInfo[1][i+2][1] == 'EF':
+                sentenceInfo[1][i+2] = ['ㄴ다', 'EF']
 
         # 종결어미 앞이 형용사인 경우, '군' → '다'로 수정
         for i in range(len(sentenceInfo[1])):
