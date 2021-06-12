@@ -54,7 +54,7 @@ def main(inputSentence, inputSentenceStyle, subjectHonorification):
     elif inputSentenceStyle == 3:
         sentenceInfo = sentenceStyle.habsyo(sentenceInfo, sentenceType)
 
-    if sentenceInfo[2][0] == 1:
+    if sentenceInfo[2][1] == 1:
         sentenceInfo = irregular.irregular(sentenceInfo)
     sentenceInfo = honorification.honorification2(sentenceInfo)
 
