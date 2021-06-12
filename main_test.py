@@ -15,7 +15,7 @@ import random
 FILE_PATH = config.FILE_PATH  # 말뭉치 excel 파일이 위치한 경로
 
 
-def getCorpus(fname, start_idx=0, idx_range=5):
+def getCorpus(fname, start_idx=40, idx_range=20):
     excelTitle = FILE_PATH + fname  # 경로 + 파일명
     excel_dafaframe = pd.read_excel(
         excelTitle + ".xlsx", engine='openpyxl')  # 원본 excel 파일
@@ -38,7 +38,7 @@ def getCorpus(fname, start_idx=0, idx_range=5):
             si += 1
 
         result = list(
-            map(lambda x, y: [x, y], eng_list, kor_list))
+            map(lambda x, y: [x, y], eng_list[start_idx: start_idx + idx_range], kor_list[start_idx: start_idx + idx_range]))
 
         return result
         # return [eng_list[start_idx: start_idx + idx_range], kor_list[start_idx: start_idx + idx_range]]
@@ -100,6 +100,7 @@ def main(inputSentence, inputSentenceStyle, subjectHonorification):
     print(sentenceInfo, end="7\n")
     outputSentence = hgtkTest.textCompose(sentenceInfo[0])
 
+    print(sentenceType)
     print(outputSentence)
     return outputSentence
 
@@ -121,6 +122,7 @@ def testing():
     for idx, test in enumerate(testList):
         print("Test Num.", idx)
         print(test[1])
+        input()
         for i in range(4):
 
             main(test[0], i, 0)
